@@ -1,0 +1,7 @@
+.env
+node_modules/
+projects/
+.claude/
+*.tgz
+*.log
+.DS_Store

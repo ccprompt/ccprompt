@@ -1,0 +1,53 @@
+{
+  "name": "@ccprompt/cli",
+  "version": "1.0.0",
+  "description": "16 structured AI coding prompts, installed as Claude Code slash commands.",
+  "main": "promptm.js",
+  "bin": {
+    "ccprompt": "promptm.js"
+  },
+  "scripts": {
+    "start": "node promptm.js",
+    "test": "node --test test.js"
+  },
+  "keywords": [
+    "prompt",
+    "ai",
+    "claude",
+    "claude-code",
+    "prompt-engineering",
+    "prompt-management",
+    "cli",
+    "developer-tools",
+    "coding-assistant",
+    "slash-commands"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccprompt/ccprompt.git"
+  },
+  "homepage": "https://github.com/ccprompt/ccprompt#readme",
+  "bugs": {
+    "url": "https://github.com/ccprompt/ccprompt/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "promptm.js",
+    "templates/",
+    ".env.example",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7"
+  }
+}

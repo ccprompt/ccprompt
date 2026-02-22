@@ -8,15 +8,15 @@
 
 **Audit focus:** $ARGUMENTS
 
-Conduct a thorough security audit. Check every attack surface. Verify every trust boundary. Assume nothing is safe until proven otherwise. Be paranoid – that's your job.
+Conduct a thorough security audit. Your job is not to check boxes — it's to find the ways this system can be broken. Map the attack surface, think about how an attacker would approach it, then systematically verify every trust boundary.
 
 ## Don't
 
-- Don't skip checklist items because "we don't use that"
-- Don't assume dependencies are secure – verify them
-- Don't log sensitive findings in plain text
+- Don't skip items because "we don't use that" — verify it's actually not there
+- Don't assume dependencies are secure — check them
 - Don't fix issues without documenting them in the report first
-- Don't stop at "it looks fine" – prove it's fine
+- Don't stop at "it looks fine" — prove it's fine
+- Don't just audit — try to break it
 
 ## Step 1: Map the Attack Surface
 
@@ -28,15 +28,24 @@ Identify everything that's exposed:
 - All stored data (database, files, cache, logs)
 - All environment variables and secrets
 
-## Step 2: OWASP Top 10 Checklist
+## Step 2: Threat Model
+
+Before checking boxes, think like an attacker:
+- Who would attack this system? (Opportunistic scanner, targeted attacker, malicious user, insider)
+- What are the highest-value targets? (User data, payment info, admin access, API keys)
+- What's the easiest path in? (Weakest endpoint, least-validated input, most-exposed service)
+- What would cause the most damage? (Data breach, account takeover, service disruption)
+
+Focus the audit on the highest-risk areas first.
+
+## Step 3: OWASP Top 10 Audit
 
 ### A01: Broken Access Control
 - [ ] Every endpoint checks authentication
 - [ ] Authorization is role-based and enforced server-side
-- [ ] Users cannot access other users' data
+- [ ] Users cannot access other users' data (IDOR check)
 - [ ] Admin endpoints are properly protected
 - [ ] CORS is configured correctly (not `*` in production)
-- [ ] Directory listing is disabled
 
 ### A02: Cryptographic Failures
 - [ ] Passwords are hashed (bcrypt/argon2, NOT md5/sha1)
@@ -53,34 +62,35 @@ Identify everything that's exposed:
 - [ ] File paths are validated (no path traversal)
 
 ### A04: Insecure Design
-- [ ] Rate limiting on auth endpoints
-- [ ] Account lockout after failed attempts
-- [ ] Password strength requirements
-- [ ] Multi-factor authentication (where appropriate)
+- [ ] Trust boundaries are defined and enforced
+- [ ] Business logic cannot be abused (e.g., ordering negative quantities, skipping payment steps)
+- [ ] Defense in depth — no single layer is the only protection
+- [ ] Fail-secure — system denies access on error, not grants it
 
 ### A05: Security Misconfiguration
 - [ ] Debug mode OFF in production
 - [ ] Default credentials changed
-- [ ] Error messages don't expose internals
-- [ ] Security headers set (HSTS, CSP, X-Frame-Options, etc.)
+- [ ] Error messages don't expose internals (stack traces, SQL errors)
+- [ ] Security headers set (HSTS, CSP, X-Frame-Options)
 - [ ] Unnecessary features/endpoints disabled
 
 ### A06: Vulnerable Components
-- [ ] `npm audit` / equivalent run – no critical/high vulnerabilities
-- [ ] Dependencies are up to date
-- [ ] No known vulnerable packages
+- [ ] `npm audit` / `pip audit` / equivalent run — no critical/high vulnerabilities
+- [ ] Dependencies are reasonably up to date
 - [ ] Lock file is committed
+- [ ] No dependencies with known CVEs in use
 
 ### A07: Authentication Failures
+- [ ] Rate limiting on login/signup endpoints
+- [ ] Account lockout or delay after failed attempts
 - [ ] Session tokens are secure (httpOnly, secure, sameSite)
 - [ ] JWT tokens have reasonable expiration
-- [ ] Refresh token rotation is implemented
 - [ ] Logout actually invalidates the session
 
 ### A08: Data Integrity Failures
 - [ ] Webhook payloads are verified (signatures checked)
-- [ ] File uploads are validated (type, size, content)
-- [ ] Deserialization is safe
+- [ ] File uploads are validated (type, size, content — not just extension)
+- [ ] Deserialization is safe (no untrusted object deserialization)
 
 ### A09: Logging & Monitoring
 - [ ] Auth failures are logged
@@ -89,38 +99,41 @@ Identify everything that's exposed:
 - [ ] Alerting exists for suspicious activity
 
 ### A10: Server-Side Request Forgery (SSRF)
-- [ ] User-supplied URLs are validated
+- [ ] User-supplied URLs are validated against an allowlist
 - [ ] Internal services are not accessible via user input
-- [ ] Redirect URLs are allowlisted
+- [ ] Redirect URLs are validated
 
-## Step 3: Secrets Audit
+## Step 4: Secrets Audit
 
-- [ ] No secrets in code (grep for API keys, passwords, tokens)
-- [ ] No secrets in git history (`git log -p | grep -i "password\|secret\|key\|token"`)
-- [ ] No secrets in documentation or comments
+- [ ] No secrets in code (search for API keys, passwords, tokens)
+- [ ] No secrets in git history (use `trufflehog` or `gitleaks`, or targeted: `git log -p -S "sk-" --all`)
 - [ ] `.env` is in `.gitignore`
 - [ ] `.env.example` has no real values
-- [ ] All secrets are from environment variables or secret manager
+- [ ] All secrets come from environment variables or a secret manager
 
-## Step 4: Data Protection
+## Step 5: Try to Break It
+
+Don't just audit — verify exploitability:
+- Pick the 3 highest-risk findings and attempt to exploit them
+- Try to access another user's data
+- Try to bypass authentication on protected endpoints
+- Try to inject through the most exposed input fields
+- Document what worked, what didn't, and what was close
+
+## Step 6: Data Protection (if applicable)
 
 - [ ] PII is identified and documented
-- [ ] Data retention policy exists
-- [ ] User data can be exported/deleted (GDPR)
-- [ ] Backups are encrypted
+- [ ] User data can be exported/deleted (GDPR/privacy compliance)
 - [ ] Database connections use SSL
-
-## Step 5: Infrastructure
-
-- [ ] Production environment is hardened
-- [ ] SSH keys / access credentials are rotated
-- [ ] Firewall rules are restrictive (deny by default)
-- [ ] Monitoring and alerting is active
+- [ ] Backups are encrypted
 
 ## Output Format
 
 ```
-## Security Audit Report – [Date]
+## Security Audit Report
+
+### Threat Model Summary
+[Key actors, targets, and highest-risk attack paths]
 
 ### Risk Summary
 | Severity | Count | Status |
@@ -130,25 +143,27 @@ Identify everything that's exposed:
 | Medium   | [N]   | [Fixed/Open] |
 | Low      | [N]   | [Fixed/Open] |
 
-### Critical Findings
-1. **[Finding]** – [Location] – [Impact] – [Remediation]
-
-### High Findings
-1. **[Finding]** – [Location] – [Impact] – [Remediation]
+### Critical/High Findings
+1. **[Finding]** — Location: [where] — Impact: [what happens] — Exploitable: [yes/no/partial] — Fix: [how]
 
 ### Medium/Low Findings
 [Grouped list]
 
-### Passed Checks ✅
+### Exploitation Attempts
+[What was tried, what succeeded, what failed]
+
+### Passed Checks
 [What's secure and well-implemented]
 
-### Recommendations
-[Priority-ordered action items]
+### Priority Action Items
+[Ordered by risk, each with specific fix]
 ```
 
 ## Success Criteria
 
-- Every item on the OWASP checklist is checked (not skipped)
-- All critical and high findings have remediation steps
-- Secrets audit is clean (no exposed credentials)
-- A clear, prioritized action plan exists for all open issues
+- Attack surface is fully mapped before checking individual items
+- Threat model identifies the highest-risk areas
+- Every OWASP category is checked (not skipped)
+- Top findings were tested for actual exploitability, not just theoretical risk
+- All critical and high findings have specific remediation steps
+- Secrets audit is clean

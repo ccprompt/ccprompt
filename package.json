@@ -1,6 +1,6 @@
 {
   "name": "@ccprompt/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "18 structured AI coding prompts, installed as Claude Code slash commands.",
   "main": "promptm.js",
   "bin": {

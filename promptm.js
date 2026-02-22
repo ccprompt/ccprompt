@@ -23,7 +23,7 @@ const program = new Command();
 program
   .name('ccprompt')
   .description('Individualize general prompts for specific projects')
-  .version('1.0.1');
+  .version('1.0.2');
 
 // --- Helper functions ---
 

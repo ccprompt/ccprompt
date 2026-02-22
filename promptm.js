@@ -23,7 +23,7 @@ const program = new Command();
 program
   .name('ccprompt')
   .description('Individualize general prompts for specific projects')
-  .version('1.0.0');
+  .version('1.0.1');
 
 // --- Helper functions ---
 
@@ -65,13 +65,9 @@ function ensureDir(dir) {
   }
 }
 
-function isClaudeCodeAvailable() {
-  try {
-    const { execSync } = require('child_process');
-    execSync('claude --version', { stdio: 'ignore', timeout: 5000 });
-    return true;
-  } catch { return false; }
-}
+// claude --print removed — using OAuth tokens from Claude Code subscriptions
+// in third-party tools violates Anthropic's Consumer Terms of Service.
+// Individualization requires an Anthropic API key.
 
 function validateName(name) {
   if (!name || /[/\\:*?"<>|]/.test(name) || name.includes('..') || name.startsWith('.')) {
@@ -407,7 +403,7 @@ function updateClaudeMd(projectPath, templates, commandsDir) {
 // --- Generate helper (shared by generate, regenerate-all, refresh) ---
 
 async function generateForProject(project, ctx, opts = {}) {
-  const { useClaudeCode = false, force = false, templateFilter = null } = opts;
+  const { force = false, templateFilter = null } = opts;
 
   const templates = templateFilter ? [templateFilter] : getTemplates();
   const projectDir = path.join(PROJECTS_DIR, project);
@@ -452,22 +448,15 @@ async function generateForProject(project, ctx, opts = {}) {
   }
 
   if (toGenerate.length > 0) {
-    let callFn;
-    if (useClaudeCode) {
-      callFn = callClaudeCode;
-    } else if (process.env.ANTHROPIC_API_KEY) {
-      callFn = callClaude;
-    } else if (isClaudeCodeAvailable()) {
-      console.log('  No API key found. Using Claude Code (claude --print) automatically.');
-      callFn = callClaudeCode;
-    } else {
-      console.error('No ANTHROPIC_API_KEY set and Claude Code not found.');
-      console.error('Options: set key in ~/.ccprompt/.env, install Claude Code, or use "ccprompt install-generic".');
+    if (!process.env.ANTHROPIC_API_KEY) {
+      console.error('No ANTHROPIC_API_KEY set.');
+      console.error('Individualization requires an Anthropic API key.');
+      console.error('Set it in ~/.ccprompt/.env or use "ccprompt install-generic" for free generic templates.');
       process.exit(1);
     }
-    const isClaudeCodeMode = callFn === callClaudeCode;
-    const BATCH_SIZE = isClaudeCodeMode ? 1 : 5;
-    const mode = isClaudeCodeMode ? 'via Claude Code' : 'in parallel';
+    const callFn = callClaude;
+    const BATCH_SIZE = 5;
+    const mode = 'in parallel';
     console.log(`  Generating ${toGenerate.length} prompt(s) ${mode}...`);
 
     for (let i = 0; i < toGenerate.length; i += BATCH_SIZE) {
@@ -608,27 +597,6 @@ function migrateFromOldLocation() {
 // Run migration on startup
 migrateFromOldLocation();
 
-async function callClaudeCode(systemPrompt, userPrompt) {
-  const { execSync } = require('child_process');
-  const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
-  const env = { ...process.env };
-  delete env.CLAUDECODE;
-  try {
-    const result = execSync(`claude --print -`, {
-      input: fullPrompt,
-      maxBuffer: 1024 * 1024,
-      timeout: 180000,
-      encoding: 'utf-8',
-      env,
-    });
-    return result.trim();
-  } catch (err) {
-    if (err.message.includes('ENOENT') || err.message.includes('not found')) {
-      throw new Error('Claude Code not found. Install it or use API key mode instead.');
-    }
-    throw new Error(`Claude Code failed: ${err.message.substring(0, 200)}`);
-  }
-}
 
 const SYSTEM_PROMPT_TEMPLATE = `You are an expert prompt engineer specializing in AI coding assistant prompts. Your job is to take a general-purpose prompt template and individualize it for a specific software project.
 
@@ -863,7 +831,6 @@ program
   .option('-t, --template <name>', 'Generate only a specific template')
   .option('--dry-run', 'Show what would be sent to the API without making calls')
   .option('--force', 'Regenerate even if cached (ignore cache)')
-  .option('--use-claude-code', 'Use Claude Code (claude --print) instead of API key')
   .option('-y, --yes', 'Skip confirmation prompt')
   .action(async (project, opts) => {
     const ctx = getProjectContext(project);
@@ -910,7 +877,6 @@ program
     console.log(`\nGenerating individualized prompts for "${project}"...\n`);
 
     const { succeeded, failed, cached } = await generateForProject(project, ctx, {
-      useClaudeCode: opts.useClaudeCode,
       force: opts.force,
       templateFilter: opts.template,
     });
@@ -1090,7 +1056,6 @@ program
   .description('Rescan + regenerate + install in one step (keeps prompts up to date)')
   .option('-y, --yes', 'Skip confirmation prompt')
   .option('--force', 'Regenerate even if cached')
-  .option('--use-claude-code', 'Use Claude Code (claude --print) instead of API key')
   .action(async (project, opts) => {
     // Step 1: Rescan
     console.log(`\n=== Step 1: Rescan ===`);
@@ -1108,7 +1073,6 @@ program
     }
 
     const { succeeded, failed, cached } = await generateForProject(project, ctx, {
-      useClaudeCode: opts.useClaudeCode,
       force: opts.force,
     });
     console.log(`  Results: ${succeeded} succeeded${cached > 0 ? ` (${cached} cached)` : ''}, ${failed} failed`);
@@ -1129,7 +1093,6 @@ program
   .command('regenerate-all')
   .description('Regenerate individualized prompts for ALL projects')
   .option('-t, --template <name>', 'Regenerate only a specific template across all projects')
-  .option('--use-claude-code', 'Use Claude Code (claude --print) instead of API key')
   .option('-y, --yes', 'Skip confirmation prompt')
   .action(async (opts) => {
     const projects = getProjects();
@@ -1142,8 +1105,7 @@ program
     const totalCalls = projects.length * templates.length;
 
     if (!opts.yes) {
-      const mode = opts.useClaudeCode ? 'Claude Code calls' : 'API calls';
-      console.log(`\nThis will regenerate ${templates.length} template(s) for ${projects.length} project(s) (${totalCalls} ${mode}).`);
+      console.log(`\nThis will regenerate ${templates.length} template(s) for ${projects.length} project(s) (${totalCalls} API calls).`);
       const ok = await confirm('Proceed?');
       if (!ok) {
         console.log('Cancelled.');
@@ -1161,8 +1123,7 @@ program
       console.log(`\n${project}:`);
 
       const { succeeded, failed } = await generateForProject(project, ctx, {
-        useClaudeCode: opts.useClaudeCode,
-        force: true, // regenerate-all always regenerates
+          force: true, // regenerate-all always regenerates
         templateFilter: opts.template,
       });
 

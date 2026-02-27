@@ -14,19 +14,19 @@ This is a new session. You know NOTHING yet. Do NOT assume, do NOT guess, do NOT
 
 - Don't start coding before reading ALL documentation
 - Don't assume you know the project from the file names
-- Don't skip reading HANDOVER.md – it has critical context from the last session
+- Don't skip reading HANDOVER.md — it has critical context from the last session
 - Don't make changes until the user confirms your understanding
-- Don't ignore failing tests or build errors – report them first
+- Don't ignore failing tests or build errors — report them first
 
 ## Step 1: Read Everything
 
-Read ALL of these in full – no skimming, no shortcuts:
-- `CLAUDE.md` – project rules, overview, architecture (if exists)
-- `README.md` – what this project is
-- `HANDOVER.md` – what the last session left behind (if exists)
+Read ALL of these in full — no skimming, no shortcuts:
+- `CLAUDE.md` — project rules, overview, architecture (if exists)
+- `README.md` — what this project is
+- `HANDOVER.md` — what the last session left behind (if exists)
 - Every `.md` file in root and `docs/`
-- `package.json` / `pyproject.toml` / equivalent – dependencies, scripts
-- Recent git log – what happened recently
+- `package.json` / `pyproject.toml` / equivalent — dependencies, scripts
+- Recent git log — what happened recently
 
 Do NOT proceed until you've read them all.
 
@@ -38,7 +38,7 @@ Answer these questions for yourself:
 - What's the folder structure? What lives where?
 - What are the key entry points and hot paths?
 - What patterns and conventions does this codebase follow?
-- What's the current state – working? broken? half-finished?
+- What's the current state — working? broken? half-finished?
 
 ## Step 3: Understand Current State
 
@@ -50,26 +50,46 @@ Answer these questions for yourself:
 
 ## Step 4: Verify the Environment
 
-Actually run these – don't assume they work:
+Actually run these — don't assume they work:
 - Can the project build? (`npm run build` / equivalent)
 - Can it start? (`npm run dev` / equivalent)
 - Do tests pass? (`npm test` / equivalent)
 - Is the git state clean?
 - Report ANY issues found.
 
-## Step 5: Plan Your Context Budget
+## Step 5: Assess Session Risk Profile
 
-This is critical – context is finite:
-- Estimate how much context this session has
+Before planning, assess what kind of session this is:
+
+| Risk Factor | Low | Medium | High |
+|-------------|-----|--------|------|
+| Scope | Single file | Multi-file | Architectural |
+| Reversibility | Easy undo | Moderate | Hard to reverse |
+| Dependencies | None | Some | Many systems |
+| Familiarity | Known code | Partially known | New territory |
+| Blast radius | Local change | Module-wide | System-wide |
+
+**Session risk: [LOW / MEDIUM / HIGH]**
+
+Map risk to verification depth:
+- **LOW risk** — Standard verification (quick checks after changes)
+- **MEDIUM risk** — Enhanced verification (test each change, cross-reference)
+- **HIGH risk** — Full 5-layer verification stack (`/verify-thorough` on every significant change)
+
+## Step 6: Plan Your Context Budget
+
+This is critical — context is finite:
+- Estimate how much context this session needs
 - If the task is large, plan for a handover before context runs out
 - If the task needs more than one session, create a `DECISIONS.md` to log choices made
 - Always keep enough reserve to do a clean handover (~15%)
 
-## Step 6: Confirm Alignment
+## Step 7: Confirm Alignment
 
 Before ANY work:
 - Summarize what you understand about the project (2-3 sentences)
 - State the current priorities as you understand them
+- State the assessed risk level and planned verification depth
 - Ask clarifying questions if ANYTHING is unclear
 - Do NOT start work until the user confirms your understanding
 
@@ -79,11 +99,12 @@ Before ANY work:
 - Document every decision and its reasoning
 - Commit regularly with clear, conventional messages
 - If context gets low (~15%), STOP and switch to handover protocol immediately
-- No heroics – if something is unclear, ask
+- No heroics — if something is unclear, ask
 
 ## Success Criteria
 
 - You can explain the project to someone in 30 seconds
 - You know exactly what needs to be done and in what order
 - The environment works and you've verified it
+- Risk level is assessed and verification depth is planned
 - User has confirmed your understanding before work begins

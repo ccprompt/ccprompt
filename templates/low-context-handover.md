@@ -16,6 +16,7 @@ CRITICAL LOW CONTEXT. STOP all tasks. STOP all implementation. STOP all debuggin
 - Don't write incomplete handovers — the next session depends on this
 - Don't leave uncommitted changes without documenting them
 - Don't skip the rollback info — the next session needs to know how to undo
+- Don't skip the decisions table — rejected approaches are as valuable as chosen ones
 
 ## Step 1: 30-Second Summary (Write This First)
 
@@ -51,9 +52,10 @@ Create `HANDOVER.md` in the project root with this structure:
 - [ ] [Another item] — Blocked by: [reason]
 
 ## Decisions Made
-| Decision | Why | Alternatives Considered |
-|----------|-----|------------------------|
-| [Choice] | [Reasoning] | [What else was considered] |
+| Decision | Why | Alternatives Rejected | Why Rejected |
+|----------|-----|-----------------------|--------------|
+| [Choice] | [Reasoning] | [Alt 1] | [Why it was worse] |
+| [Choice] | [Reasoning] | [Alt 2] | [Why it was worse] |
 
 ## Known Issues
 - [Issue]: [Impact and workaround if any]
@@ -71,7 +73,18 @@ Create `HANDOVER.md` in the project root with this structure:
 - `path/to/file` — [what changed and why]
 ```
 
-## Step 4: Final Checklist
+**IMPORTANT: The Decisions table MUST include rejected alternatives and WHY they were rejected.** This prevents the next session from re-exploring dead ends. Documenting what you DIDN'T do is as valuable as documenting what you did.
+
+## Step 4: Context Health Check
+
+If you're at 40-60% context (warning zone, not yet emergency):
+- Compress conversation to preserve context
+- Reassess remaining work against remaining context
+- If work can be completed, continue with heightened awareness
+- If work cannot be completed, proceed to full handover now
+- Don't wait for emergency — act at the warning, not the alarm
+
+## Step 5: Final Checklist
 
 - [ ] 30-second summary written
 - [ ] All partial work stashed or committed
@@ -79,8 +92,10 @@ Create `HANDOVER.md` in the project root with this structure:
 - [ ] Every modified file is listed with what changed
 - [ ] Next steps are clear, prioritized, and actionable
 - [ ] Rollback info is documented
+- [ ] Decisions table includes rejected alternatives with reasons
 - [ ] Git status is clean (committed or documented why not)
 
 ## Success Criteria
 
 - A brand new session with zero context can read HANDOVER.md and continue work without asking a single clarifying question
+- No dead-end approaches will be re-explored thanks to the decisions table

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**22 structured AI coding prompts, installed as slash commands in Claude Code.** Type `/kickoff`, `/debug-rootcause`, `/security-audit` and get structured, opinionated workflows — completely free.
+**27 structured AI coding prompts, installed as slash commands in Claude Code.** Type `/kickoff`, `/debug-rootcause`, `/security-audit` and get structured, opinionated workflows — completely free.
 
 ## Quick Start (30 seconds)
 
@@ -41,6 +41,11 @@ That's it. Open Claude Code in your project and type `/kickoff`.
 | `/think-first` | **NEW** Developer plans first, AI independently, compare blind spots |
 | `/context-plan` | **NEW** Budget your context window before starting complex work |
 | `/confidence-calibration` | **NEW** Track predicted vs actual confidence to improve judgment |
+| `/setup-hooks` | **NEW** Configure Claude Code hooks for automated verification |
+| `/visual-verify` | **NEW** Visual & browser verification: screenshots, console, Playwright |
+| `/parallel-agents` | **NEW** Orchestrate parallel agents with worktrees and subagents |
+| `/setup-claude-md` | **NEW** Build CLAUDE.md with Hot/Warm/Cold memory hierarchy |
+| `/incident-response` | **NEW** Production incident triage: assess, contain, fix, postmortem |
 
 Every template supports `$ARGUMENTS` — pass context directly:
 ```
@@ -100,7 +105,7 @@ The generic template is 113 lines. The individualized version is 191 lines — a
 
 ```
 ccprompt install-generic [path]  # Instant setup – free, no API key needed
-ccprompt templates               # List all 22 templates
+ccprompt templates               # List all 27 templates
 ccprompt scan <path>             # Auto-detect & register project
 ccprompt generate <project>     # Individualize (requires API key)
 ccprompt install <project>      # Install as slash commands

@@ -6,7 +6,7 @@
 
 ## How It Works
 
-1. General prompt templates live in `templates/` (18 templates)
+1. General prompt templates live in `templates/` (30 templates)
 2. Projects are registered via `ccprompt scan <path>` → saves context to `projects/<name>/context.json`
 3. `ccprompt generate <project>` sends templates + project context to Claude API → saves individualized prompts to `projects/<name>/`
 4. `ccprompt install <project>` copies individualized prompts into the project's `.claude/commands/` folder
@@ -22,13 +22,13 @@
 ## Key Files
 
 - `promptm.js` – CLI entry point, all commands (~1350 lines)
-- `templates/` – 18 prompt templates
+- `templates/` – 30 prompt templates
 - `projects/` – per-project context.json + individualized prompts
 - `.env` – ANTHROPIC_API_KEY
 ## Commands
 
 ```
-ccprompt templates          # List all 18 templates
+ccprompt templates          # List all 30 templates
 ccprompt list               # List all projects
 ccprompt scan <path>        # Auto-detect & register project
 ccprompt rescan <project>   # Re-scan preserving manual edits
@@ -47,9 +47,9 @@ ccprompt stats              # Full overview dashboard
 ccprompt remove <project>   # Delete project
 ```
 
-## Templates (18)
+## Templates (30)
 
-kickoff, low-context-handover, housekeeping, research-investigate, verify-thorough, debug-rootcause, code-review, quick-task, security-audit, deploy-checklist, feature-build, refactor, test-write, performance, architect, think-plan, creative-brainstorm, migrate
+kickoff, read-handover, low-context-handover, context-plan, correction-stop, confidence-calibration, think-first, think-plan, creative-brainstorm, strategic-next, research-investigate, architect, feature-build, quick-task, refactor, migrate, code-review, test-write, security-audit, performance, verify-thorough, principles-check, deploy-checklist, incident-response, housekeeping, setup-hooks, setup-claude-md, visual-verify, parallel-agents, debug-rootcause
 
 ## Rules
 

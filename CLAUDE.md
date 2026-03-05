@@ -21,7 +21,7 @@
 
 ## Key Files
 
-- `promptm.js` – CLI entry point, all commands (~1350 lines)
+- `promptm.js` – CLI entry point, all commands (~1300 lines)
 - `templates/` – 32 prompt templates
 - `projects/` – per-project context.json + individualized prompts
 - `.env` – ANTHROPIC_API_KEY

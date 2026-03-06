@@ -26,6 +26,9 @@ Before changing anything, record the current state:
 - `npm audit` results: [summary]
 - Unused dependencies: [list]
 - Known documentation gaps: [list]
+- Local git branches: [count]
+- Stale remote-tracking branches: [count]
+- Deployed artifacts / VM state: [summary if applicable]
 
 This is your "before" snapshot to measure progress.
 
@@ -85,7 +88,52 @@ Search for and eliminate:
 - Build scripts – Do they all work? Any dead scripts?
 - Are there hardcoded values that should be configurable?
 
-## Step 6: Consolidation
+## Step 6: Git Hygiene
+
+Clean up the version control layer:
+
+**Branches:**
+- List all local branches — delete any that are merged or abandoned
+- Check for stale remote-tracking branches (`git remote prune origin`)
+- Is the default branch naming consistent?
+- Are there branches that diverged long ago and will never merge?
+
+**History & Tags:**
+- Are there tags that should exist but don't (releases, milestones)?
+- Are there orphaned tags pointing to nothing useful?
+- Any large files accidentally committed that should be in `.gitignore`?
+
+**Git Config:**
+- `.gitignore` — complete? Missing any generated files, IDE configs, OS artifacts?
+- `.gitattributes` — appropriate for the project?
+- Any sensitive data in git history that shouldn't be there?
+
+## Step 7: VM / Server / Deployment Cleanup
+
+If the project runs on remote infrastructure, audit that too:
+
+**Deployed Artifacts:**
+- Old deployments, containers, or images still running or stored?
+- Stale builds or artifacts taking up disk space?
+- Orphaned resources (databases, storage buckets, DNS entries) from old features?
+
+**Logs & Temp Files:**
+- Log rotation configured? Are logs growing unbounded?
+- Temp files, crash dumps, or debug artifacts accumulating?
+- Old backups that should be archived or deleted?
+
+**Environment & Config:**
+- Environment variables still accurate? Any stale keys or endpoints?
+- Are staging/dev environments in sync with what the code expects?
+- SSL certs, API keys, tokens — any expiring soon?
+
+**Monitoring & Alerts:**
+- Are health checks and monitoring still pointing at the right things?
+- Any alerts that fire constantly and get ignored? Fix or remove them.
+
+*Note: Skip this step if the project is local-only / not deployed.*
+
+## Step 8: Consolidation
 
 This is the most important step. Consolidate aggressively:
 - Multiple docs covering the same topic → merge into one
@@ -98,7 +146,7 @@ This is the most important step. Consolidate aggressively:
 - What it was replaced with (if applicable)
 - Risk of removal (none/low/medium)
 
-## Step 7: After Metrics & Report
+## Step 9: After Metrics & Report
 
 Record the new state and produce a summary:
 
@@ -110,6 +158,9 @@ Record the new state and produce a summary:
 - Root files: [X] → [Y]
 - Unused dependencies: [X] → [Y]
 - Vulnerabilities: [X] → [Y]
+- Git branches (local): [X] → [Y]
+- Stale remote branches: [X] → [Y]
+- Deployed artifacts cleaned: [list if applicable]
 
 ### Changes Made
 - [What was cleaned up]
@@ -130,4 +181,6 @@ Record the new state and produce a summary:
 - No duplicate documentation – each topic has exactly one source of truth
 - No dead code, unused deps, or orphaned files
 - All remaining docs are accurate and up-to-date
+- Git is clean – no stale branches, proper .gitignore, no accidental large files
+- VM/deployment is clean – no orphaned artifacts, logs rotated, configs current (if applicable)
 - The "after" metrics are measurably better than "before"

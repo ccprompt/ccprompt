@@ -110,7 +110,7 @@ The generic template is 113 lines. The individualized version is 191 lines — a
 
 ```
 ccprompt install-generic [path]  # Instant setup – free, no API key needed
-ccprompt templates               # List all 32 templates
+ccprompt templates               # List all 33 templates
 ccprompt scan <path>             # Auto-detect & register project
 ccprompt generate <project>     # Individualize (requires API key)
 ccprompt install <project>      # Install as slash commands

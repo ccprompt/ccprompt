@@ -29,6 +29,14 @@ Before anything else, build a complete mental model:
 - Read the tests — what's already covered? What's the expected behavior?
 - Read the config — are there environment-specific behaviors?
 
+**Map what you know vs. what you assume:**
+
+| Know (verified) | Don't Know (questions) | Assume (must verify) |
+|-----------------|----------------------|---------------------|
+| [Facts] | [Questions] | [Hypotheses to test] |
+
+Be ruthless. Most "knowledge" is assumption. Mark it honestly.
+
 **Answer these questions (with evidence, not guesses):**
 - What is the current behavior? (Prove it — run it, read the output, check the state)
 - What should the behavior be after your change?
@@ -63,7 +71,18 @@ Write out your plan before touching any code:
 
 Every step must have a verification method. "It looks right" is not verification. Running a test, checking output, reading state — that's verification.
 
-## Phase 3: VERIFY PRECONDITIONS — Prove Your Starting Point
+## Phase 3: PRE-MORTEM — Assume the Plan Failed
+
+Before executing, assume the plan has failed. Why?
+- What's the weakest step?
+- Where are you most likely wrong?
+- What dependency could break?
+- What haven't you considered?
+- Argue AGAINST your own plan. What's the strongest counter-argument?
+
+If the pre-mortem reveals a critical flaw, fix the plan BEFORE executing.
+
+## Phase 4: VERIFY PRECONDITIONS — Prove Your Starting Point
 
 Before executing the plan:
 - Run the existing tests — do they pass? (If not, fix that first)
@@ -73,7 +92,7 @@ Before executing the plan:
 
 If anything surprises you, STOP. Update your mental model and revise the plan.
 
-## Phase 4: EXECUTE — One Step at a Time
+## Phase 5: EXECUTE — One Step at a Time
 
 For each step in your plan:
 
@@ -86,7 +105,7 @@ If a step produces an unexpected result:
 - Do NOT press forward hoping the next step fixes it
 - STOP. Understand why. Update the plan if needed. Then continue.
 
-## Phase 5: PROVE IT WORKS — End-to-End Verification
+## Phase 6: PROVE IT WORKS — End-to-End Verification
 
 After all steps are complete:
 - Run ALL relevant tests (not just the ones you added)
@@ -94,7 +113,7 @@ After all steps are complete:
 - Check for regressions — did anything else break?
 - Review your own diff — does every line make sense? Is anything extra?
 
-## Phase 6: SANITY CHECK — Challenge Yourself
+## Phase 7: SANITY CHECK — Challenge Yourself
 
 Before declaring done:
 - Explain out loud (in text) what you changed and why — if you can't explain it clearly, you don't fully understand it

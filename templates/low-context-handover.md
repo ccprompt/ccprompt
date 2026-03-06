@@ -1,6 +1,6 @@
 # Low-Context Handover
 
-**When to use:** Context window is ~10-15% remaining. STOP EVERYTHING. This is not optional.
+**When to use:** Context window is ~5-15% remaining. You still have room to do this properly. Do NOT wait for emergency — act now while you can still think clearly.
 
 **Role:** You are now a documentarian. Your only job is to capture the complete state so the next session can pick up seamlessly.
 
@@ -8,7 +8,7 @@
 
 **Session context:** $ARGUMENTS
 
-CRITICAL LOW CONTEXT. STOP all tasks. STOP all implementation. STOP all debugging. Nothing else matters except documenting the current state RIGHT NOW.
+LOW CONTEXT. STOP all tasks. STOP all implementation. STOP all debugging. Nothing else matters except documenting the current state RIGHT NOW.
 
 ## Don't
 
@@ -75,16 +75,7 @@ Create `HANDOVER.md` in the project root with this structure:
 
 **IMPORTANT: The Decisions table MUST include rejected alternatives and WHY they were rejected.** This prevents the next session from re-exploring dead ends. Documenting what you DIDN'T do is as valuable as documenting what you did.
 
-## Step 4: Context Health Check
-
-If you're at 40-60% context (warning zone, not yet emergency):
-- Compress conversation to preserve context
-- Reassess remaining work against remaining context
-- If work can be completed, continue with heightened awareness
-- If work cannot be completed, proceed to full handover now
-- Don't wait for emergency — act at the warning, not the alarm
-
-## Step 5: Final Checklist
+## Step 4: Final Checklist
 
 - [ ] 30-second summary written
 - [ ] All partial work stashed or committed

@@ -22,7 +22,7 @@
 ## Key Files
 
 - `promptm.js` – CLI entry point, all commands (~1300 lines)
-- `templates/` – 32 prompt templates
+- `templates/` – 33 prompt templates
 - `projects/` – per-project context.json + individualized prompts
 - `.env` – ANTHROPIC_API_KEY
 ## Commands
@@ -47,9 +47,9 @@ ccprompt stats              # Full overview dashboard
 ccprompt remove <project>   # Delete project
 ```
 
-## Templates (33)
+## Templates (35)
 
-kickoff, read-handover, low-context-handover, context-plan, correction-stop, confidence-calibration, think-first, think-plan, creative-brainstorm, strategic-next, research-investigate, architect, feature-build, quick-task, refactor, migrate, code-review, test-write, security-audit, performance, verify-thorough, principles-check, deploy-checklist, incident-response, housekeeping, setup-hooks, setup-claude-md, visual-verify, parallel-agents, debug-rootcause, iterate-visual, plan-certain, best-practices
+kickoff, read-handover, low-context-handover, emergency-handover, correction-stop, confidence-calibration, think-first, creative-brainstorm, strategic-next, research-investigate, architect, feature-build, quick-task, refactor, migrate, code-review, test-write, test-audit, security-audit, performance, verify-thorough, principles-check, deploy-checklist, incident-response, housekeeping, setup-hooks, setup-claude-md, visual-verify, parallel-agents, debug-rootcause, iterate-visual, plan-certain, best-practices
 
 ## Rules
 

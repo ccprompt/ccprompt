@@ -59,16 +59,16 @@ Every session starts at the top. Every session ends at the bottom. The middle ad
 
 ## The Parallelism Multiplier
 
-The loop works for one session. It scales with parallel sessions:
+The loop works for one project. It scales across projects: one project per IDE, multiple IDEs open simultaneously.
 
-- **IDE 1:** Building a feature (`/feature-build`)
-- **IDE 2:** Writing tests for yesterday's work (`/test-write`)
-- **IDE 3:** Security audit on the payment module (`/security-audit`)
-- **IDE 4:** Researching next week's migration (`/research-investigate`)
+- **IDE 1:** Building a website
+- **IDE 2:** Writing an ebook
+- **IDE 3:** Developing a CLI tool
+- **IDE 4:** Preparing marketing content
 
-Each IDE runs its own lifecycle. Each produces its own handover. Next day, `/read-handover` in each one and continue.
+Each project runs its own lifecycle. Each produces its own handover. When you switch back to a project, `/read-handover` picks up exactly where you left off. Ten projects progressing simultaneously, zero context loss.
 
-One developer. Team-level output.
+One developer. Portfolio-level output.
 
 ## All 33 Commands
 

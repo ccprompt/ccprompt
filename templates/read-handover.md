@@ -70,29 +70,24 @@ Based on the handover's "Next Steps" and your verification:
 3. **Identify any blockers** the previous session didn't anticipate
 4. **Estimate context budget** — will you finish, or should you plan for another handover?
 
-## Step 6: Confirm Alignment
+## Step 6: Brief Status Then GO
 
-Before starting any work, report to the user:
+Give the user a SHORT status update (3-4 lines max), then IMMEDIATELY start working. Do NOT ask what to do. Do NOT wait for confirmation. Do NOT list questions. The handover already tells you what to do — do it.
 
 ```
-## Handover Received
-
-**Previous session:** [one-sentence summary of what happened]
-**Current state:** [verified state — matches handover? any discrepancies?]
-**Decisions inherited:** [list key decisions you're carrying forward]
-**Continuing with:** [what you'll work on first]
-**Estimated scope:** [can you finish, or plan for another handover?]
-**Questions:** [anything unclear from the handover?]
+## Picking up from handover
+**Previous session:** [one-sentence summary]
+**Continuing with:** [first task from next steps]
 ```
 
-Wait for user confirmation before proceeding.
+Then start executing immediately.
 
-## Step 7: Continue Work
+## Step 7: Execute
 
-Once confirmed:
-- Pick up from the in-progress items
+- Pick up from the in-progress items — start coding NOW
 - Follow the next steps in priority order
 - Honor all inherited decisions unless explicitly overridden
+- Do NOT ask the user "should I continue?" or "what would you like me to do?" — the handover IS your instructions
 - If context gets low (~40%), start thinking about your own handover
 - If context hits ~15%, stop and run `/low-context-handover`
 
@@ -102,5 +97,5 @@ Once confirmed:
 - Current state was verified against the handover description
 - No rejected approaches were re-explored without new evidence
 - All inherited decisions were acknowledged and respected
-- The user confirmed alignment before work started
+- Work started IMMEDIATELY after brief status — no waiting for user input
 - Work continued from exactly where the previous session stopped

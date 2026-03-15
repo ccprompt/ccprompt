@@ -8,7 +8,7 @@
 **A complete AI coding workflow in 8 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
-npx @ccprompt/cli install-generic .
+npx @ccprompt/cli install .
 ```
 
 ## The Problem
@@ -145,83 +145,25 @@ Every template supports `$ARGUMENTS` for passing context directly:
 
 Templates are plain markdown files installed to `.claude/commands/`. Claude Code reads them as slash commands. No API key, no account, no setup beyond the one-liner.
 
-**Want project-specific prompts?** ccprompt can scan your project and individualize each template with your actual file paths, commands, and conventions. This optional feature requires an [Anthropic API key](https://console.anthropic.com/).
+```bash
+npx @ccprompt/cli install .
+```
+
+Or install globally:
 
 ```bash
 npm install -g @ccprompt/cli
-ccprompt scan .
-ccprompt generate myproject    # requires ANTHROPIC_API_KEY
-ccprompt install myproject
+ccprompt install .
 ```
-
-### Individualization example
-
-Generic template:
-```
-## Step 2: Reproduce It
-- Find the exact steps to trigger the issue
-- Find the minimal reproduction
-- Document the reproduction steps
-```
-
-After individualization (React + Remotion + Express project):
-```
-## Step 2: Reproduce It
-- Find the exact steps to trigger the issue
-- Find the minimal reproduction
-- Document the reproduction steps
-
-Project-specific reproduction workflow:
-  # For video generation issues
-  npm run dev                    # Open Remotion Studio
-  npx remotion render video/index.ts CompositionName output/test.mp4
-
-  # For web UI issues
-  cd web && npm run dev          # Start frontend
-
-  # For API issues
-  npm run api:dev                # Start Express server
-
-  # For test failures
-  npm test                       # Run Vitest
-```
-
-The generic template is 113 lines. The individualized version is 191 lines, all project-specific.
 
 ## CLI Commands
 
 ```
-ccprompt install-generic [path]  # Instant setup, free, no API key needed (--all for all projects)
-ccprompt templates               # List all 27 templates
-ccprompt scan <path>             # Auto-detect and register project
-ccprompt generate <project>      # Individualize (requires API key)
-ccprompt install <project>       # Install as slash commands
-ccprompt refresh <project>       # Rescan + regenerate + install (one step)
-ccprompt install-all             # Install into all projects
-ccprompt regenerate-all          # Refresh all after template changes
-ccprompt list                    # List registered projects
-ccprompt stats                   # Overview dashboard
-ccprompt rescan <project>        # Re-scan (preserves manual edits)
-ccprompt update <project>        # Update context fields
-ccprompt copy <proj> <tmpl>      # Copy prompt to clipboard
-ccprompt show <proj> <tmpl>      # View in terminal
-ccprompt diff <proj> <tmpl>      # Compare original vs individualized
-ccprompt new-template <name>     # Create custom template scaffold
-ccprompt remove <project>        # Delete project
-```
-
-## Keeping Prompts Up to Date
-
-When your project evolves (new deps, new files, new conventions):
-
-```bash
-ccprompt refresh myproject    # rescan + regenerate + install in one step
-```
-
-Or for all projects:
-
-```bash
-ccprompt regenerate-all -y && ccprompt install-all
+ccprompt install [path]      # Install templates as slash commands
+ccprompt templates           # List all 27 templates
+ccprompt show <template>     # View a template in the terminal
+ccprompt copy <template>     # Copy a template to clipboard
+ccprompt new-template <name> # Create a custom template
 ```
 
 ## Troubleshooting
@@ -230,7 +172,7 @@ ccprompt regenerate-all -y && ccprompt install-all
 
 Global install didn't link properly. Use npx instead:
 ```bash
-npx @ccprompt/cli install-generic .
+npx @ccprompt/cli install .
 ```
 
 Or reinstall globally:
@@ -240,26 +182,19 @@ npm install -g @ccprompt/cli
 
 ### Slash commands don't appear in Claude Code
 
-Make sure you ran `install` (or `install-generic`) in the right project directory. Claude Code reads from `.claude/commands/` relative to your project root.
+Make sure you ran `install` in the right project directory. Claude Code reads from `.claude/commands/` relative to your project root.
 
 ```bash
 ls .claude/commands/    # should list .md files
 ```
 
-### Templates look generic after install-generic
-
-That's expected. `install-generic` copies templates as-is. For project-specific prompts, use `scan` + `generate` + `install` (requires API key).
-
 ## FAQ
-
-**Do I need an API key?**
-No. `install-generic` works with zero configuration and is completely free. An API key is only needed for the optional individualization feature (`generate`).
 
 **Does this work with Cursor / other AI editors?**
 The slash commands are specific to Claude Code's `.claude/commands/` convention. The template markdown files themselves work anywhere. Copy and paste them into any AI assistant.
 
 **Can I edit templates after installation?**
-Yes. They're plain markdown in `.claude/commands/`. Edit freely. Running `install` or `install-generic` again will overwrite them, so keep custom edits in a separate copy if needed.
+Yes. They're plain markdown in `.claude/commands/`. Edit freely. Running `install` again will overwrite them, so keep custom edits in a separate copy if needed.
 
 **Where can I learn the full methodology?**
 The session lifecycle is part of the Paranoid Verification methodology. Learn more at [codewithrigor.com](https://codewithrigor.com).
@@ -268,7 +203,6 @@ The session lifecycle is part of the Paranoid Verification methodology. Learn mo
 
 - Node.js 18+
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (for using slash commands)
-- Anthropic API key (optional, only for individualization)
 
 ## License
 

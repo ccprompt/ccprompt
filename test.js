@@ -7,8 +7,6 @@ const os = require('os');
 
 const CLI = `node "${path.join(__dirname, 'promptm.js')}"`;
 const TEMPLATES_DIR = path.join(__dirname, 'templates');
-const PROJECTS_DIR = path.join(os.homedir(), '.ccprompt', 'projects');
-const TEST_PREFIX = '__test_';
 const TEMPLATE_FILES = fs.readdirSync(TEMPLATES_DIR).filter(f => f.endsWith('.md'));
 const TEMPLATE_COUNT = TEMPLATE_FILES.length;
 const TEMPLATE_NAMES = TEMPLATE_FILES.map(f => f.replace('.md', ''));
@@ -36,10 +34,10 @@ describe('CLI basics', () => {
 
   it('shows help', () => {
     const out = run('--help');
-    assert.ok(out.includes('Individualize general prompts'));
-    assert.ok(out.includes('templates'));
-    assert.ok(out.includes('generate'));
     assert.ok(out.includes('install'));
+    assert.ok(out.includes('templates'));
+    assert.ok(out.includes('show'));
+    assert.ok(out.includes('copy'));
   });
 });
 
@@ -77,167 +75,9 @@ describe('templates command', () => {
   });
 });
 
-// --- Scan detection ---
+// --- Install ---
 
-describe('scan detection', () => {
-  const tmpBase = path.join(os.tmpdir(), 'ccprompt-test-' + Date.now());
-
-  before(() => {
-    fs.mkdirSync(tmpBase, { recursive: true });
-  });
-
-  after(() => {
-    // Clean up test projects from ~/.ccprompt
-    try {
-      const entries = fs.readdirSync(PROJECTS_DIR);
-      for (const e of entries) {
-        if (e.startsWith(TEST_PREFIX)) {
-          fs.rmSync(path.join(PROJECTS_DIR, e), { recursive: true });
-        }
-      }
-    } catch { /* ok */ }
-    // Clean up temp dirs
-    fs.rmSync(tmpBase, { recursive: true, force: true });
-  });
-
-  it('detects Node.js project from package.json', () => {
-    const dir = path.join(tmpBase, 'node-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({
-      name: 'test',
-      scripts: { start: 'node index.js', dev: 'nodemon index.js', test: 'jest' },
-      dependencies: { express: '^4.0.0' }
-    }));
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}node`);
-    assert.ok(out.includes('Express'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}node`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.stack.includes('Express'));
-    assert.equal(ctx.commands.start, 'npm start');
-    assert.equal(ctx.commands.dev, 'npm run dev');
-    assert.equal(ctx.commands.test, 'npm test');
-  });
-
-  it('detects Python project from requirements.txt', () => {
-    const dir = path.join(tmpBase, 'py-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'requirements.txt'), 'flask==2.0\n');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}python`);
-    assert.ok(out.includes('Python'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}python`, 'context.json'), 'utf-8'));
-    assert.equal(ctx.stack, 'Python');
-    assert.equal(ctx.commands.test, 'pytest');
-  });
-
-  it('detects Go project from go.mod', () => {
-    const dir = path.join(tmpBase, 'go-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'go.mod'), 'module example.com/test\n');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}go`);
-    assert.ok(out.includes('Go'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}go`, 'context.json'), 'utf-8'));
-    assert.equal(ctx.stack, 'Go');
-    assert.equal(ctx.commands.test, 'go test ./...');
-    assert.equal(ctx.commands.build, 'go build ./...');
-  });
-
-  it('detects Rust project from Cargo.toml', () => {
-    const dir = path.join(tmpBase, 'rust-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'Cargo.toml'), '[package]\nname = "test"\n');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}rust`);
-    assert.ok(out.includes('Rust'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}rust`, 'context.json'), 'utf-8'));
-    assert.equal(ctx.stack, 'Rust');
-    assert.equal(ctx.commands.test, 'cargo test');
-  });
-
-  it('detects Java Maven project from pom.xml', () => {
-    const dir = path.join(tmpBase, 'java-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'pom.xml'), '<project></project>');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}java`);
-    assert.ok(out.includes('Java (Maven)'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}java`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.stack.includes('Java (Maven)'));
-    assert.equal(ctx.commands.test, 'mvn test');
-  });
-
-  it('detects C# project from .csproj', () => {
-    const dir = path.join(tmpBase, 'csharp-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'App.csproj'), '<Project></Project>');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}csharp`);
-    assert.ok(out.includes('C# (.NET)'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}csharp`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.stack.includes('C# (.NET)'));
-    assert.equal(ctx.commands.test, 'dotnet test');
-  });
-
-  it('detects Docker from Dockerfile', () => {
-    const dir = path.join(tmpBase, 'docker-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'Dockerfile'), 'FROM node:18\n');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}docker`);
-    assert.ok(out.includes('Docker'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}docker`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.stack.includes('Docker'));
-  });
-
-  it('detects multiple stacks in same project', () => {
-    const dir = path.join(tmpBase, 'multi-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({
-      name: 'test', dependencies: { next: '^14', react: '^18', typescript: '^5' }
-    }));
-    fs.writeFileSync(path.join(dir, 'Dockerfile'), 'FROM node:18\n');
-    fs.writeFileSync(path.join(dir, 'tsconfig.json'), '{}');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}multi`);
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}multi`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.stack.includes('Next.js'));
-    assert.ok(ctx.stack.includes('React'));
-    assert.ok(ctx.stack.includes('TypeScript'));
-    assert.ok(ctx.stack.includes('Docker'));
-    assert.ok(ctx.conventions.includes('TypeScript'));
-  });
-
-  it('detects docs (CLAUDE.md, README.md)', () => {
-    const dir = path.join(tmpBase, 'docs-proj');
-    fs.mkdirSync(dir);
-    fs.writeFileSync(path.join(dir, 'README.md'), '# My Project\nA cool project.');
-    fs.writeFileSync(path.join(dir, 'CLAUDE.md'), '# Rules\nDo good.');
-    const out = run(`scan "${dir}" --name ${TEST_PREFIX}docs`);
-    assert.ok(out.includes('CLAUDE.md'));
-    assert.ok(out.includes('README.md'));
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}docs`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.keyDocs.includes('CLAUDE.md'));
-    assert.ok(ctx.keyDocs.includes('README.md'));
-  });
-
-  it('detects entry files', () => {
-    const dir = path.join(tmpBase, 'entry-proj');
-    fs.mkdirSync(dir);
-    fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
-    fs.writeFileSync(path.join(dir, 'src', 'index.ts'), 'export default {};');
-    fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({ name: 'test' }));
-    run(`scan "${dir}" --name ${TEST_PREFIX}entry`);
-    const ctx = JSON.parse(fs.readFileSync(
-      path.join(PROJECTS_DIR, `${TEST_PREFIX}entry`, 'context.json'), 'utf-8'));
-    assert.ok(ctx.keyFiles.includes('src/index.ts'));
-  });
-});
-
-// --- Install generic ---
-
-describe('install-generic', () => {
+describe('install command', () => {
   const tmpDir = path.join(os.tmpdir(), 'ccprompt-install-test-' + Date.now());
 
   before(() => {
@@ -249,7 +89,7 @@ describe('install-generic', () => {
   });
 
   it(`installs all ${TEMPLATE_COUNT} templates as slash commands`, () => {
-    const out = run(`install-generic "${tmpDir}"`);
+    const out = run(`install "${tmpDir}"`);
     assert.ok(out.includes(`${TEMPLATE_COUNT} slash commands installed`));
     const commandsDir = path.join(tmpDir, '.claude', 'commands');
     const files = fs.readdirSync(commandsDir).filter(f => f.endsWith('.md'));
@@ -264,78 +104,31 @@ describe('install-generic', () => {
   });
 });
 
-// --- Validation ---
+// --- Show ---
 
-describe('validation', () => {
-  it('rejects names with special characters', () => {
-    const err = runErr(`init "bad:name" -d "test" -s "node"`);
-    assert.ok(err.includes('Invalid') || err.includes('special characters'));
-  });
-
-  it('rejects names starting with dot', () => {
-    const err = runErr(`init ".hidden" -d "test" -s "node"`);
-    assert.ok(err.includes('Invalid') || err.includes('special characters'));
-  });
-
-  it('rejects names with path traversal', () => {
-    const err = runErr(`init "../../etc" -d "test" -s "node"`);
-    assert.ok(err.includes('Invalid') || err.includes('special characters'));
-  });
-});
-
-// --- Stats ---
-
-describe('stats command', () => {
-  it('shows template and project counts', () => {
-    const out = run('stats');
-    assert.ok(out.includes(`Templates: ${TEMPLATE_COUNT}`));
-    assert.ok(out.includes('Projects:'));
-    assert.ok(out.includes('Data dir:'));
-  });
-});
-
-// --- Show/diff ---
-
-describe('show and diff', () => {
-  it('show --original displays generic template', () => {
-    const out = run('show anyproject kickoff --original');
+describe('show command', () => {
+  it('displays template content', () => {
+    const out = run('show kickoff');
     assert.ok(out.includes('# Session Kickoff'));
     assert.ok(out.includes('$ARGUMENTS'));
   });
 
-  it('show fails for nonexistent project', () => {
-    const err = runErr('show nonexistent_xyz kickoff');
-    assert.ok(err.includes('not found') || err.includes('No individualized'));
-  });
-
-  it('show fails for nonexistent template', () => {
-    const err = runErr('show nonexistent_xyz nonexistent_template');
-    assert.ok(err.includes('not exist') || err.includes('not found'));
+  it('fails for nonexistent template', () => {
+    const err = runErr('show nonexistent_template_xyz');
+    assert.ok(err.includes('not found'));
   });
 });
 
-// --- Generate dry-run ---
+// --- Validation ---
 
-describe('generate --dry-run', () => {
-  it('shows system prompt without making API calls', () => {
-    // Use a real project for this test
-    const projects = fs.readdirSync(PROJECTS_DIR).filter(f => {
-      try { return fs.statSync(path.join(PROJECTS_DIR, f)).isDirectory() && !f.startsWith(TEST_PREFIX); }
-      catch { return false; }
-    });
-    if (projects.length === 0) return; // skip if no projects
-    const out = run(`generate "${projects[0]}" --dry-run`);
-    assert.ok(out.includes('DRY RUN'));
-    assert.ok(out.includes('System prompt'));
-    assert.ok(out.includes('Templates to individualize'));
+describe('validation', () => {
+  it('rejects template names with special characters', () => {
+    const err = runErr('new-template "bad:name"');
+    assert.ok(err.includes('Invalid'));
   });
-});
 
-// --- List ---
-
-describe('list command', () => {
-  it('lists registered projects', () => {
-    const out = run('list');
-    assert.ok(out.includes('Registered projects') || out.includes('No projects'));
+  it('rejects template names starting with dot', () => {
+    const err = runErr('new-template ".hidden"');
+    assert.ok(err.includes('Invalid'));
   });
 });

@@ -51,3 +51,9 @@ That's it. Write it. Save it. Stop.
 - Do NOT add sections beyond the template above
 - If you can only write ONE thing, write "What's NOT Done" and "Do This Next"
 - Prefer a short, complete handover over a long, incomplete one
+
+## Success Criteria
+
+- HANDOVER.md exists with at minimum "What's NOT Done" and "Do This Next" filled in
+- All uncommitted work is stashed or committed
+- The next session can pick up without asking "what was happening?"

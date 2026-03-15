@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 26 slash commands into Claude Code. Eight of them form a loop that runs every session:
+ccprompt installs 27 slash commands into Claude Code. Eight of them form a loop that runs every session:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,7 +70,7 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 26 Commands
+## All 27 Commands
 
 ### Session lifecycle (the core loop)
 
@@ -110,6 +110,7 @@ One developer. Portfolio-level output.
 | `/best-practices` | Code quality standards audit |
 | `/game-tester` | Play and test games with Playwright MCP, find bugs and UX issues |
 | `/flow-tester` | Systematically test every logical flow end-to-end |
+| `/asset-quality-audit` | Audit game asset quality, consistency, AI art defects |
 
 ### Thinking and planning
 
@@ -191,7 +192,7 @@ The generic template is 113 lines. The individualized version is 191 lines, all 
 
 ```
 ccprompt install-generic [path]  # Instant setup, free, no API key needed (--all for all projects)
-ccprompt templates               # List all 26 templates
+ccprompt templates               # List all 27 templates
 ccprompt scan <path>             # Auto-detect and register project
 ccprompt generate <project>      # Individualize (requires API key)
 ccprompt install <project>       # Install as slash commands

@@ -131,7 +131,55 @@ Now think like a QA engineer. Test the game's logic exhaustively:
 - Opening multiple tabs of the game — does state leak?
 - What happens at score = 0? Score = 999999? Negative?
 
-## Phase 5: Edge Cases & Chaos Testing
+## Phase 5: Performance & Audio
+
+Two areas that separate amateur games from polished ones. Test both ruthlessly:
+
+**Performance (observe and document):**
+- [ ] Initial load time — how long from URL to playable? Acceptable?
+- [ ] Frame rate — does the game feel smooth (60fps) or choppy? Any visible stuttering?
+- [ ] Frame drops — do specific actions cause visible lag? (Explosions, many sprites, transitions)
+- [ ] Memory behavior — does the game get slower over time? (Play for 5+ minutes and compare)
+- [ ] Animation smoothness — are animations fluid or do they skip frames?
+- [ ] Input latency — is there visible delay between click/keypress and response?
+- [ ] Asset loading — do assets pop in? Visible loading of sprites/textures during gameplay?
+- [ ] Scrolling/camera movement — smooth or jerky?
+- [ ] Stress test — spawn maximum entities, trigger many effects simultaneously. What breaks first?
+
+**If the game uses canvas/WebGL:**
+- Playwright can't inspect canvas DOM — use coordinate-based clicking and screenshots
+- Check if the game exposes state via `window.__gameState` or similar hooks
+- Look for visual artifacts: screen tearing, Z-fighting, texture flickering
+- Test with browser GPU acceleration on and off if possible
+
+**Audio testing (systematic):**
+- [ ] Does the game have audio? If yes, evaluate ALL of it:
+- [ ] Sound effects — do they exist for every action? Missing SFX for any interaction?
+- [ ] SFX quality — do they fit the game's style? Jarring or pleasant?
+- [ ] SFX timing — do sounds play at the right moment? Any delay?
+- [ ] Music — is there background music? Does it loop seamlessly or have an audible cut?
+- [ ] Music mood — does it match the game's tone and current scene?
+- [ ] Volume balance — can you hear SFX over music? Is anything too loud/quiet?
+- [ ] Volume controls — do they exist? Do they work? Do they persist?
+- [ ] Mute option — can the player mute audio? Does it remember the setting?
+- [ ] Audio overlap — what happens when many sounds trigger simultaneously?
+- [ ] Audio on tab switch — does it mute when the tab loses focus? It should
+
+**Screenshot the game at moments where performance or audio issues are visible/relevant. For performance: screenshot during heavy load moments. Note any audio issues alongside the visual state.**
+
+## Phase 6: Cross-Browser & Compatibility
+
+Don't assume it works everywhere because it works in your browser:
+
+- [ ] Test in Chrome, Firefox, and Safari (or at minimum 2 browsers) — screenshot differences
+- [ ] Test at 3+ viewport sizes: 1920x1080, 1366x768, 375x667 (mobile)
+- [ ] Does the game adapt to different aspect ratios?
+- [ ] Test with browser zoom at 100%, 125%, 150% — does the game break?
+- [ ] Touch simulation — would basic interactions work on mobile?
+
+**Screenshot every difference between browsers/sizes. Side-by-side comparisons are gold.**
+
+## Phase 7: Edge Cases & Chaos Testing
 
 Time to try to break things. Be creative and mischievous:
 
@@ -149,7 +197,7 @@ Time to try to break things. Be creative and mischievous:
 
 **Take screenshots of EVERY broken or unexpected state. These are gold.**
 
-## Phase 6: Player Experience Assessment — Be Brutally Honest
+## Phase 8: Player Experience Assessment — Be Brutally Honest
 
 Step back and think about the overall experience. No flattery. No padding. TRUTH:
 
@@ -202,10 +250,17 @@ Step back and think about the overall experience. No flattery. No padding. TRUTH
 [For each feature: screenshot + what works + what doesn't + player experience]
 [Feature coverage: X/Y features tested (aim for 100%)]
 
+### Bug Severity Guide
+- **Blocker:** Game crashes, freezes, or becomes completely unplayable
+- **Critical:** Major feature broken, progression impossible, data loss
+- **Major:** Feature partially broken, workaround exists but experience is degraded
+- **Minor:** Noticeable issue that doesn't block gameplay
+- **Cosmetic:** Visual-only, doesn't affect functionality
+
 ### Bugs Found
-| # | Severity | Description | Steps to Reproduce | Impact on Player | Screenshot |
-|---|----------|-------------|-------------------|-----------------|------------|
-| 1 | Critical/Major/Minor/Cosmetic | [What's wrong] | [Exact steps] | [How it ruins the experience] | [ref] |
+| # | Severity | Category | Description | Steps to Reproduce | Impact on Player | Screenshot |
+|---|----------|----------|-------------|-------------------|-----------------|------------|
+| 1 | Blocker/Critical/Major/Minor/Cosmetic | Visual/Audio/Logic/Performance/UX/State | [What's wrong] | [Exact steps] | [How it ruins the experience] | [ref] |
 
 ### UI/UX Issues
 | # | Type | Description | Why It Matters | Fix Suggestion | Screenshot |
@@ -216,6 +271,25 @@ Step back and think about the overall experience. No flattery. No padding. TRUTH
 | # | Area | Expected | Actual | Severity | Screenshot |
 |---|------|----------|--------|----------|------------|
 | 1 | [Game area] | [Should happen] | [Actually happens] | [How bad] | [ref] |
+
+### Performance
+- **Load time:** [seconds] — [acceptable?]
+- **Frame rate feel:** [smooth/choppy/varies] — [when does it drop?]
+- **Input responsiveness:** [instant/slight delay/laggy]
+- **Memory behavior:** [stable/degrades over time]
+- **Stress test result:** [what broke first under load?]
+
+### Audio
+- **SFX coverage:** [all actions have sounds? missing any?]
+- **SFX quality:** [1-10] — [fit the game?]
+- **Music:** [exists? loops well? mood-appropriate?]
+- **Volume balance:** [1-10] — [SFX vs music balance]
+- **Audio issues found:** [list]
+
+### Compatibility
+- **Browsers tested:** [which + results]
+- **Viewport sizes tested:** [which + results]
+- **Zoom levels tested:** [which + results]
 
 ### Player Experience — Honest Assessment
 - **Fun factor:** [1-10] — [specific reasons, not vague praise]
@@ -251,9 +325,12 @@ What would need to change for this to be genuinely good?]
 - Screenshots were taken at every significant moment (minimum 30-50+)
 - Each screenshot has a detailed analysis paragraph, not just "looks fine"
 - Both happy path AND edge cases were tested exhaustively
-- Bugs are documented with severity, reproduction steps, player impact, and screenshots
+- Bugs are documented with severity, category, reproduction steps, player impact, and screenshots
 - UI/UX was evaluated from a player's perspective with merciless honesty
 - Game logic was tested for consistency, rules, and edge cases
+- Performance was evaluated: load time, frame rate, input latency, stress behavior
+- Audio was systematically tested: SFX coverage, music, volume balance, edge cases
+- Cross-browser and multiple viewport sizes tested with comparison screenshots
 - The overall player experience was HONESTLY assessed — no sugarcoating
 - Criticism is specific, actionable, and explains WHY something is a problem
 - Improvement suggestions are specific, prioritized, and estimated for effort

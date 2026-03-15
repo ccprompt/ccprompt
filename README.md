@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 33 slash commands into Claude Code. Eight of them form a loop that runs every session:
+ccprompt installs 26 slash commands into Claude Code. Eight of them form a loop that runs every session:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -32,7 +32,7 @@ ccprompt installs 33 slash commands into Claude Code. Eight of them form a loop 
        |
 /creative-brainstorm    Explore approaches before committing to one
        |
-    [BUILD]             /feature-build, /quick-task, /debug-rootcause...
+    [BUILD]             /feature-build, /debug-rootcause, /refactor...
        |
 /verify-thorough        Prove correctness: 5 verification layers
        |
@@ -70,7 +70,7 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 33 Commands
+## All 26 Commands
 
 ### Session lifecycle (the core loop)
 
@@ -91,9 +91,7 @@ One developer. Portfolio-level output.
 |---------|-------------|
 | `/kickoff` | Start session: read everything, understand context first |
 | `/feature-build` | Structured feature implementation with incremental steps |
-| `/quick-task` | Small focused task, no heavyweight protocol |
 | `/architect` | Design before you build. Constraints first, then options, then decide |
-| `/migrate` | Moving between frameworks, libraries, or APIs. Incremental, safe, reversible |
 | `/refactor` | Safe restructuring: characterization tests first, small steps |
 
 ### Debugging and fixing
@@ -101,18 +99,17 @@ One developer. Portfolio-level output.
 | Command | What it does |
 |---------|-------------|
 | `/debug-rootcause` | Find the REAL cause. 5 WHYs technique. Fix cause, not symptom |
-| `/correction-stop` | Hit 2 failed fixes? Stop, revert, rethink, restart |
-| `/incident-response` | Production incident triage: assess, contain, fix, postmortem |
 
 ### Quality and security
 
 | Command | What it does |
 |---------|-------------|
 | `/code-review` | Pre-commit quality gate with security checklist |
-| `/test-write` | Write comprehensive tests. Happy path, edge cases, error cases |
 | `/test-audit` | Test coverage gaps and test quality audit |
 | `/security-audit` | Full OWASP Top 10 mapped security review |
 | `/best-practices` | Code quality standards audit |
+| `/game-tester` | Play and test games with Playwright MCP, find bugs and UX issues |
+| `/flow-tester` | Systematically test every logical flow end-to-end |
 
 ### Thinking and planning
 
@@ -121,7 +118,6 @@ One developer. Portfolio-level output.
 | `/think-first` | Developer plans first, AI independently, compare blind spots |
 | `/plan-certain` | Stop, understand fully, plan precisely, then act |
 | `/research-investigate` | Deep dive, brainstorm, plan with all context |
-| `/confidence-calibration` | Track predicted vs actual confidence to improve judgment |
 | `/emergency-handover` | Fast context save when things are critical |
 
 ### Operations
@@ -129,15 +125,12 @@ One developer. Portfolio-level output.
 | Command | What it does |
 |---------|-------------|
 | `/deploy-checklist` | Pre-deployment validation. Every time. No exceptions |
-| `/performance` | Profile first, optimize second. Never guess the bottleneck |
 
 ### Setup
 
 | Command | What it does |
 |---------|-------------|
 | `/setup-claude-md` | Build CLAUDE.md with Hot/Warm/Cold memory hierarchy |
-| `/setup-hooks` | Configure Claude Code hooks for automated verification |
-| `/parallel-agents` | Orchestrate parallel agents with worktrees and subagents |
 | `/iterate-visual` | Iterative UI/UX refinement with visual feedback loops |
 
 Every template supports `$ARGUMENTS` for passing context directly:
@@ -197,8 +190,8 @@ The generic template is 113 lines. The individualized version is 191 lines, all 
 ## CLI Commands
 
 ```
-ccprompt install-generic [path]  # Instant setup, free, no API key needed
-ccprompt templates               # List all 33 templates
+ccprompt install-generic [path]  # Instant setup, free, no API key needed (--all for all projects)
+ccprompt templates               # List all 26 templates
 ccprompt scan <path>             # Auto-detect and register project
 ccprompt generate <project>      # Individualize (requires API key)
 ccprompt install <project>       # Install as slash commands

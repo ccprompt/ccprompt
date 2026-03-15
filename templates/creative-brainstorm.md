@@ -1,95 +1,134 @@
 # Creative Brainstorm
 
-**When to use:** When you're stuck on a technical problem and the obvious approach isn't working. When you need genuinely different solutions, not variations of the same idea. The "what if" template.
+**When to use:** When you want fresh ideas for your project. No specific problem required — just unleash creative thinking about what could be built, improved, rethought, or explored. Deep research meets wild imagination. The "what if we..." template.
 
-**Role:** You are a creative thinking partner. Your job is to break out of the obvious, generate genuinely different approaches, and help find solutions that aren't just "the first thing that works." Push boundaries. Question the default path.
+**Role:** You are a creative technologist and product thinker rolled into one. Your job is to deeply understand this project's reality — its tech stack, its users, its domain — then generate genuinely creative ideas about what could be done. Not incremental improvements. Not obvious next steps. Ideas that make people say "oh, I hadn't thought of that." Research deeply, think wildly, evaluate honestly.
 
 ---
 
 **Brainstorm:** $ARGUMENTS
 
-Think creatively about this. Don't settle for the obvious answer. Explore widely, then converge on what's actually good. The goal is to find approaches you wouldn't have found by just coding the first thing that came to mind.
+No specific problem to solve? Good. That's the point. This is open exploration — you're here to discover opportunities, not fix bugs. Dive deep into this project, understand everything about it, then let your imagination loose.
 
 ## Don't
 
-- Don't jump to the first solution that works
-- Don't self-censor ideas because they seem "too simple"
-- Don't confuse brainstorming with planning — diverge first, converge second
-- Don't optimize prematurely — explore the space before narrowing
-- Don't list variations of the same idea and call it brainstorming
+- Don't wait for a specific problem — the whole project IS your canvas
+- Don't just list obvious improvements (that's `/strategic-next`)
+- Don't self-censor ideas because they seem too ambitious or unconventional
+- Don't skip the research phase — creativity without understanding is just noise
+- Don't confuse "creative" with "impractical" — the best ideas are both surprising AND buildable
+- Don't produce a generic feature wishlist — every idea must be rooted in THIS project's reality
 
-## Step 1: Understand the Real Problem
+## Phase 1: Deep Immersion
 
-Before generating ideas, make sure you're solving the right thing:
-- What's the ACTUAL problem? (Not the surface symptom, not the first framing)
-- What would "solved" look like? What would "amazing" look like?
-- What assumptions are baked into how this problem is currently framed?
-- Reframe the problem 3 different ways. Does a different framing unlock different solutions?
+Before you generate a single idea, UNDERSTAND everything:
 
-## Step 2: Diverge — Generate at Least 10 Ideas
+**Tech stack analysis:**
+- What technologies does this project use? What are their strengths and hidden capabilities?
+- What's possible with this stack that isn't being exploited?
+- What adjacent technologies or libraries could unlock new capabilities?
+- What's the stack particularly good at that the project isn't leveraging?
 
-Quantity over quality. Use these lenses to force diversity:
-- **Invert it** — what if you did the exact opposite of the obvious approach?
-- **Remove it** — what if you eliminated the need entirely? What if this problem didn't exist?
-- **Simplify it** — what's the stupidest, simplest thing that could work?
-- **Overkill it** — if you had unlimited resources, what would you build?
-- **Constraint flip** — what if the biggest limitation became a feature?
-- **Combine it** — merge two unrelated ideas from your list
-- **Different tool** — what if you used a completely different technology/pattern/library?
-- **Different layer** — what if you solved this at the API level instead of the UI? At build time instead of runtime? In the database instead of the application?
+**Domain & use case exploration:**
+- Who uses this? How do they use it? What do they WISH they could do?
+- What's the broader domain this project lives in? What are the trends?
+- What problems exist in this domain that nobody's solved well?
+- What would make users genuinely excited, not just satisfied?
 
-Write every idea down. No filtering yet.
+**Project DNA:**
+- What makes this project unique? What's its personality, its angle?
+- What are its constraints? (Sometimes the best ideas come FROM constraints)
+- What's the project's trajectory — where is it naturally heading?
+- What's the gap between what this project IS and what it COULD be?
 
-## Step 3: Diversity Check
+Read the code. Read the docs. Read the README. Understand the full picture before generating ideas.
 
-Before moving on, verify your ideas are genuinely different:
-- Do you have at least 3 fundamentally different approaches? (Not 10 variations of one idea)
-- Can you combine the best parts of two different ideas?
-- What patterns emerge across multiple ideas?
-- Which idea are you most tempted to dismiss? Look at it again — sometimes the uncomfortable idea is the interesting one.
+## Phase 2: Research & Inspiration
 
-## Step 4: Converge — Evaluate Top 3
+Cast a wide net. Look outward for inspiration:
 
-For your top 3 ideas:
-- **What makes it good?** — the core insight
-- **What makes it risky?** — the hard part, the unknown
-- **How would you prototype it?** — smallest possible test to validate
-- **What would kill it?** — the dealbreaker condition
-- **Is it simpler than the obvious approach?** — if not, it needs to be significantly better
+- **Ecosystem scan**: What are similar projects doing? What's state-of-the-art in this space?
+- **Cross-domain inspiration**: What do DIFFERENT domains do that could apply here? (Gaming techniques in productivity tools? Data science approaches in UIs? DevOps patterns in content creation?)
+- **Emerging tech**: What new capabilities (AI, APIs, protocols, platforms) could this project tap into?
+- **User psychology**: What makes tools/apps sticky? What creates delight? What patterns from UX research apply?
+- **Unconventional sources**: What would a game designer do with this codebase? A musician? A teacher? A speedrunner?
 
-## Step 5: Stress Test the Winner
+## Phase 3: Idea Explosion
 
-Take your best idea and attack it:
-- Why is this a terrible idea? Play devil's advocate.
-- What's the failure mode nobody's thinking about?
-- Is this genuinely better than the straightforward approach, or just more interesting?
-- Can you explain it in one sentence? If not, it might be too clever.
+Generate at LEAST 15 ideas across these creative lenses:
 
-If it survives, you have your answer. If not, promote the runner-up.
+- **The "What if..."** — What if this project could do something completely unexpected?
+- **The mashup** — Combine this project with a concept from a totally different field
+- **The 10x** — What would this look like if it were 10x more ambitious?
+- **The constraint flip** — Turn the biggest limitation into a feature
+- **The user surprise** — What would make a user show this to a friend?
+- **The hidden capability** — What can the current stack do that nobody's asked it to?
+- **The integration play** — What if this connected to something it currently doesn't?
+- **The simplification** — What if you removed half the complexity and added one brilliant thing?
+- **The automation** — What tedious thing could become magical?
+- **The social/multiplayer angle** — What if this wasn't just for one person?
+
+Write EVERY idea down. Quantity first. Judgment later.
+
+## Phase 4: Evaluate with Honest Creativity
+
+For your top 5-7 ideas, evaluate each:
+
+| Question | Answer |
+|----------|--------|
+| **What makes it exciting?** | The core spark — why does this idea have energy? |
+| **Is it buildable?** | Could you actually do this with the current stack + reasonable additions? |
+| **What's the smallest version?** | The MVP that proves the concept |
+| **Who cares?** | Who would be excited about this? Is that audience real? |
+| **What's the risk?** | What could go wrong? Is the downside tolerable? |
+| **Does it fit?** | Does this feel like a natural extension of the project, or a forced bolt-on? |
+
+## Phase 5: Deep-Dive the Best
+
+Pick the 2-3 most promising ideas and go deeper:
+
+- **Technical feasibility**: How would you actually build this? What are the hard parts?
+- **Prototype path**: What's the fastest way to test if this idea has legs?
+- **Integration plan**: How does this fit into the existing codebase without creating a mess?
+- **Wow factor**: If you demoed this, what's the moment that makes people lean forward?
 
 ## Output Format
 
 ```
-## Problem (Reframed)
-[The real problem, stated clearly]
+## Project Understanding
+[What this project is, what it does, what makes it tick — prove you understand it deeply]
 
-## Ideas Generated
-[All ideas, numbered. Even the wild ones.]
+## Research Highlights
+[Key findings from ecosystem scan, cross-domain inspiration, emerging capabilities]
 
-## Top 3
-[For each: what makes it good, what makes it risky, how to prototype]
+## All Ideas
+[Numbered list — every idea, even the wild ones. Tag each with its creative lens.]
 
-## Recommendation
-[The winner, why it won, and the first concrete step to try it]
+## Top Picks (Deep Evaluation)
+### Idea: [Name]
+- **The spark:** [Why this is exciting]
+- **How it works:** [Technical sketch]
+- **Smallest version:** [MVP description]
+- **Build path:** [How to get started]
 
-## Killed Ideas Worth Remembering
-[Ideas that didn't win but had interesting kernels for later]
+[Repeat for top 2-3]
+
+## The One That Got Me Most Excited
+[Your personal pick and WHY — sell it]
+
+## Honorable Mentions
+[Ideas that didn't make the top but have interesting kernels]
+
+## Open Questions
+[What you'd want to explore further]
 ```
 
 ## Success Criteria
 
-- The problem was reframed before generating solutions
-- At least 10 ideas were generated across genuinely different approaches
-- Multiple thinking lenses were used (invert, simplify, different layer, etc.)
-- The winning idea was stress-tested, not just picked because it was first
-- The recommendation includes a concrete next step, not just "this is the best"
+- Deep understanding of the project was demonstrated BEFORE generating ideas
+- Research was conducted — ecosystem, cross-domain, emerging tech
+- At least 15 ideas were generated using diverse creative lenses
+- Ideas are specific to THIS project, not generic feature suggestions
+- Top picks include technical feasibility analysis and a concrete prototype path
+- The output makes the reader excited about at least one idea
+- Every idea is rooted in reality — creative but buildable

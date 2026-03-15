@@ -1014,31 +1014,54 @@ program
 program
   .command('install-generic [projectPath]')
   .description('Install generic templates as slash commands – no API key, no setup needed')
-  .action((projectPath) => {
-    const resolvedPath = path.resolve(projectPath || '.');
-    if (!fs.existsSync(resolvedPath)) {
-      console.error(`Path not found: ${resolvedPath}`);
-      process.exit(1);
-    }
-
-    const commandsDir = path.join(resolvedPath, '.claude', 'commands');
-    ensureDir(commandsDir);
-
+  .option('--all', 'Install into all registered projects')
+  .action((projectPath, opts) => {
     const templates = getTemplates();
     if (templates.length === 0) {
       console.error('No templates found. Package may be corrupted.');
       process.exit(1);
     }
 
-    let installed = 0;
-
-    for (const templateName of templates) {
-      const src = path.join(TEMPLATES_DIR, `${templateName}.md`);
-      if (!fs.existsSync(src)) continue;
-      installWithFrontmatter(src, path.join(commandsDir, `${templateName}.md`));
-      installed++;
+    function installGenericTo(targetPath) {
+      const commandsDir = path.join(targetPath, '.claude', 'commands');
+      ensureDir(commandsDir);
+      let installed = 0;
+      for (const templateName of templates) {
+        const src = path.join(TEMPLATES_DIR, `${templateName}.md`);
+        if (!fs.existsSync(src)) continue;
+        installWithFrontmatter(src, path.join(commandsDir, `${templateName}.md`));
+        installed++;
+      }
+      return installed;
     }
 
+    if (opts.all) {
+      const projects = getProjects();
+      let totalInstalled = 0;
+      let projectCount = 0;
+
+      for (const project of projects) {
+        const ctx = getProjectContext(project);
+        if (!ctx || !ctx.projectPath || !fs.existsSync(ctx.projectPath)) continue;
+        const installed = installGenericTo(ctx.projectPath);
+        if (installed > 0) {
+          console.log(`  ${project}: ${installed} generic templates → .claude/commands/`);
+          totalInstalled += installed;
+          projectCount++;
+        }
+      }
+
+      console.log(`\nTotal: ${totalInstalled} generic templates installed across ${projectCount} projects.`);
+      return;
+    }
+
+    const resolvedPath = path.resolve(projectPath || '.');
+    if (!fs.existsSync(resolvedPath)) {
+      console.error(`Path not found: ${resolvedPath}`);
+      process.exit(1);
+    }
+
+    const installed = installGenericTo(resolvedPath);
     console.log(`\n${installed} slash commands installed to ${resolvedPath}/.claude/commands/`);
     console.log('\nAvailable commands in Claude Code:');
     for (const t of templates) {

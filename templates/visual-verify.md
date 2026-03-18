@@ -10,6 +10,8 @@
 
 Describing visual bugs in words introduces "translation loss." A screenshot is always more precise than a description. See the bug, understand the code, fix it, verify it visually. Close the loop.
 
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 15 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session.
+
 ## Don't
 
 - Don't declare UI changes "done" without visual verification

@@ -10,6 +10,8 @@
 
 Map every path through this application, then walk each one. Don't just test the happy path — test every path. Find the dead ends, the broken transitions, the states nobody thought about.
 
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 15 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session.
+
 ## Don't
 
 - Don't just test the happy path and call it done

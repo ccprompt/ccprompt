@@ -10,7 +10,9 @@
 
 Open the game, systematically capture and evaluate EVERY visual asset. This is not gameplay testing — this is art quality control. You're looking at pixels, not mechanics.
 
-**SCREENSHOT RULE:** Screenshot every asset, every asset comparison, every issue. Take close-ups. Take wide shots showing assets in context. Take side-by-side comparisons of similar assets. Aim for 40-60+ screenshots. Each screenshot gets a detailed visual analysis.
+**SCREENSHOT RULE:** Screenshot every asset, every asset comparison, every issue. Take close-ups. Take wide shots showing assets in context. Take side-by-side comparisons of similar assets. Each screenshot gets a detailed visual analysis.
+
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 15 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session. For audits needing 40+ screenshots, split across multiple sessions.
 
 ## Don't
 

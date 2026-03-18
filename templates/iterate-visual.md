@@ -10,6 +10,8 @@
 
 See it. Analyze it. Think about what's missing. Research if needed. Plan the enhancement. Implement it. Screenshot again. Repeat until it's right. Every cycle must produce visible, measurable improvement.
 
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 15 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session.
+
 ## Don't
 
 - Don't make changes without looking at the current state first — always screenshot before touching code

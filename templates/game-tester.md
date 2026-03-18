@@ -10,7 +10,9 @@
 
 Time to play. Open the game, start interacting, and document EVERYTHING. You're not reviewing code — you're experiencing a game. Think like a player first, analyst second.
 
-**SCREENSHOT RULE:** Take a screenshot after EVERY interaction. Every click, every state change, every transition, every menu, every animation frame that matters. Then ANALYZE each screenshot — describe what you see in detail, what works, what doesn't, what feels off. If in doubt, take the screenshot. More is always better. Aim for 30-50+ screenshots per test session. Each screenshot gets a detailed analysis paragraph — not just "looks fine" but what specifically you observe about layout, colors, alignment, readability, feedback, polish.
+**SCREENSHOT RULE:** Take a screenshot after EVERY interaction. Every click, every state change, every transition, every menu, every animation frame that matters. Then ANALYZE each screenshot — describe what you see in detail, what works, what doesn't, what feels off. If in doubt, take the screenshot. Each screenshot gets a detailed analysis paragraph — not just "looks fine" but what specifically you observe about layout, colors, alignment, readability, feedback, polish.
+
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 15 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session. Use viewport 1366x768 or smaller unless testing responsive.
 
 ## Don't
 

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 38 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 39 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 38 slash commands into Claude Code. Eight of them form a loop that runs every session:
+ccprompt installs 39 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -34,7 +34,7 @@ ccprompt installs 38 slash commands into Claude Code. Eight of them form a loop 
        |
     [BUILD]             /feature-build, /debug-rootcause, /refactor...
        |
-/verify-thorough        Prove correctness: 5 verification layers
+/verify-thorough        7-layer falsification stack. Try to BREAK it.
        |
 /visual-verify          Prove it visually: screenshots, console, responsive
        |
@@ -70,7 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 38 Commands
+## All 39 Commands
+
+> **New in 2.4.0:** `/verify-thorough` rewritten as 7-layer falsification stack (was 5-layer). New `/deep-scan` — AI pattern recognition audit for large codebases. `KNOWLEDGEBASE.md` with research from formal methods, cognitive science, aviation, and AI/LLM studies.
 
 ### Session Lifecycle (the core loop)
 
@@ -79,7 +81,7 @@ One developer. Portfolio-level output.
 | `/read-handover` | Resume | Pick up where a previous session left off via HANDOVER.md |
 | `/strategic-next` | Plan | Find what to build next with research, evaluation, prioritization |
 | `/creative-brainstorm` | Explore | Think laterally, explore wild ideas, converge on the best one |
-| `/verify-thorough` | Verify | 5-layer verification stack. Be 100% sure. Trust nothing |
+| `/verify-thorough` | Verify | 7-layer falsification stack. Try to BREAK it, not confirm it |
 | `/visual-verify` | Verify | Visual and browser verification: screenshots, console, Playwright |
 | `/principles-check` | Audit | Systematic audit against your engineering principles |
 | `/housekeeping` | Clean | Cleanup, organize, consolidate. Leave it better |
@@ -134,6 +136,7 @@ One developer. Portfolio-level output.
 |---------|-------------|
 | `/performance-hunt` | Proactive performance bug hunting — O(n²), memory leaks, N+1, missing indexes |
 | `/bug-hunt` | Proactive logic bug hunting — data corruption, race conditions, silent failures |
+| `/deep-scan` | AI pattern recognition audit — cross-file inconsistencies, convention drift, implicit contracts |
 
 ### Testing
 
@@ -192,7 +195,7 @@ ccprompt install .
 
 ```
 ccprompt install [path]      # Install templates as slash commands
-ccprompt templates           # List all 38 templates
+ccprompt templates           # List all templates
 ccprompt show <template>     # View a template in the terminal
 ccprompt copy <template>     # Copy a template to clipboard
 ccprompt new-template <name> # Create a custom template

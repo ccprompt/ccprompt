@@ -6,7 +6,7 @@
 
 ## How It Works
 
-1. Prompt templates live in `templates/` (31 templates)
+1. Prompt templates live in `templates/` (39 templates)
 2. `ccprompt install [path]` copies templates into the project's `.claude/commands/` folder
 3. User types `/<template-name>` (e.g., `/kickoff`) in Claude Code → runs the prompt
 
@@ -19,7 +19,7 @@
 ## Key Files
 
 - `promptm.js` – CLI entry point, all commands
-- `templates/` – 31 prompt templates
+- `templates/` – 39 prompt templates
 - No external API dependencies
 
 ## Commands
@@ -32,9 +32,9 @@ ccprompt copy <template>     # Copy to clipboard
 ccprompt new-template <name> # Create custom template
 ```
 
-## Templates (31)
+## Templates (39)
 
-kickoff, read-handover, low-context-handover, emergency-handover, think-first, creative-brainstorm, strategic-next, research-investigate, architect, feature-build, refactor, code-review, test-audit, security-audit, verify-thorough, principles-check, deploy-checklist, housekeeping, setup-claude-md, visual-verify, debug-rootcause, iterate-visual, plan-certain, best-practices, game-tester, flow-tester, asset-quality-audit, bug-hunt, performance-hunt, accessibility-audit, dependency-audit
+kickoff, read-handover, low-context-handover, emergency-handover, think-first, creative-brainstorm, strategic-next, research-investigate, architect, feature-build, refactor, code-review, change-review, test-audit, security-audit, verify-thorough, principles-check, deploy-checklist, housekeeping, setup-claude-md, visual-verify, debug-rootcause, iterate-visual, plan-certain, best-practices, game-tester, flow-tester, asset-quality-audit, bug-hunt, performance-hunt, accessibility-audit, dependency-audit, deep-scan, api-audit, database-audit, observability-audit, resilience-audit, tech-debt-analysis, crm-review
 
 ## Rules
 

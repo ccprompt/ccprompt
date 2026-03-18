@@ -74,7 +74,7 @@ Before planning, assess what kind of session this is:
 Map risk to verification depth:
 - **LOW risk** — Standard verification (quick checks after changes)
 - **MEDIUM risk** — Enhanced verification (test each change, cross-reference)
-- **HIGH risk** — Full 5-layer verification stack (`/verify-thorough` on every significant change)
+- **HIGH risk** — Full 7-layer falsification stack (`/verify-thorough` on every significant change)
 
 ## Step 6: Plan Your Context Budget
 

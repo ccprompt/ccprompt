@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 45 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 49 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 45 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 49 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,9 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 45 Commands
+## All 49 Commands
 
-> **New in 3.0.0:** 7 new analysis templates (go-live-readiness, permission-audit, state-machine-audit, business-rule-audit, data-flow-audit, integration-audit, code-forensics). Removed personalized crm-review. `/verify-thorough` rewritten as 7-layer falsification stack. `/deep-scan` for AI pattern recognition. `KNOWLEDGEBASE.md` with cross-discipline research.
+> **New in 3.1.0:** 4 final analysis templates (error-handling-audit, concurrency-audit, config-audit, migration-assessment). **3.0.0:** 7 analysis templates, removed crm-review, verify-thorough 7-layer rewrite, deep-scan, KNOWLEDGEBASE.md.
 
 ### Session Lifecycle (the core loop)
 
@@ -123,6 +123,9 @@ One developer. Portfolio-level output.
 | `/data-flow-audit` | Sensitive data tracing — PII, credentials, financial data from entry to exit, leak detection |
 | `/integration-audit` | External system contracts — data schemas, error handling, resilience, security at boundaries |
 | `/permission-audit` | Exhaustive RBAC verification — every endpoint × every role × every resource ownership check |
+| `/error-handling-audit` | Exception architecture — swallowed errors, propagation chains, recovery strategies, error formats |
+| `/concurrency-audit` | Race conditions, missing awaits, shared mutable state, TOCTOU, deadlocks, async safety |
+| `/config-audit` | Infrastructure & environment — Dockerfiles, CI/CD, env vars, feature flags, config drift |
 
 ### Security and Quality
 
@@ -158,6 +161,7 @@ One developer. Portfolio-level output.
 | `/think-first` | Developer plans first, AI independently, compare blind spots |
 | `/plan-certain` | Stop, understand fully, plan precisely, then act |
 | `/research-investigate` | Deep dive, brainstorm, plan with all context |
+| `/migration-assessment` | Before major upgrades — breaking changes, dependency compat, blast radius, phased plan |
 
 ### Operations
 

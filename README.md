@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 39 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 45 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 39 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 45 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,9 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 39 Commands
+## All 45 Commands
 
-> **New in 2.4.0:** `/verify-thorough` rewritten as 7-layer falsification stack (was 5-layer). New `/deep-scan` — AI pattern recognition audit for large codebases. `KNOWLEDGEBASE.md` with research from formal methods, cognitive science, aviation, and AI/LLM studies.
+> **New in 3.0.0:** 7 new analysis templates (go-live-readiness, permission-audit, state-machine-audit, business-rule-audit, data-flow-audit, integration-audit, code-forensics). Removed personalized crm-review. `/verify-thorough` rewritten as 7-layer falsification stack. `/deep-scan` for AI pattern recognition. `KNOWLEDGEBASE.md` with cross-discipline research.
 
 ### Session Lifecycle (the core loop)
 
@@ -108,7 +108,6 @@ One developer. Portfolio-level output.
 |---------|-------------|
 | `/change-review` | PR/MR/diff analysis — correctness, security, data, tests, readability |
 | `/code-review` | Full senior engineer codebase audit — architecture to observability |
-| `/crm-review` | CRM-specific codebase audit (NestJS, Angular, TypeORM, PostgreSQL) |
 
 ### Deep Technical Analysis
 
@@ -119,6 +118,11 @@ One developer. Portfolio-level output.
 | `/api-audit` | Contract consistency, error responses, versioning, pagination, idempotency |
 | `/observability-audit` | Logging, metrics, tracing, health checks, alerting quality, SLOs |
 | `/tech-debt-analysis` | Hotspot mapping, debt quantification (principal/interest/risk), paydown roadmap |
+| `/state-machine-audit` | Formal workflow verification — states, transitions, invariants, deadlocks, race conditions |
+| `/business-rule-audit` | Business rule consistency — find duplicated logic with subtle differences across modules |
+| `/data-flow-audit` | Sensitive data tracing — PII, credentials, financial data from entry to exit, leak detection |
+| `/integration-audit` | External system contracts — data schemas, error handling, resilience, security at boundaries |
+| `/permission-audit` | Exhaustive RBAC verification — every endpoint × every role × every resource ownership check |
 
 ### Security and Quality
 
@@ -137,6 +141,7 @@ One developer. Portfolio-level output.
 | `/performance-hunt` | Proactive performance bug hunting — O(n²), memory leaks, N+1, missing indexes |
 | `/bug-hunt` | Proactive logic bug hunting — data corruption, race conditions, silent failures |
 | `/deep-scan` | AI pattern recognition audit — cross-file inconsistencies, convention drift, implicit contracts |
+| `/code-forensics` | Git history risk analysis — hotspots, temporal coupling, knowledge risk, change patterns |
 
 ### Testing
 
@@ -159,6 +164,7 @@ One developer. Portfolio-level output.
 | Command | What it does |
 |---------|-------------|
 | `/deploy-checklist` | Pre-deployment validation. Every time. No exceptions |
+| `/go-live-readiness` | Pre-production gate — 7 gates from functional to organizational readiness |
 | `/emergency-handover` | Fast context save when things are critical |
 
 ### Setup

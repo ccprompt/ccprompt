@@ -16,6 +16,8 @@ Collected wisdom from deep research across formal methods, cognitive science, av
 8. [Cross-Discipline Safety Lessons](#8-cross-discipline-safety-lessons)
 9. [AI Self-Verification Paradox](#9-ai-self-verification-paradox)
 10. [Adversarial Thinking Frameworks](#10-adversarial-thinking-frameworks)
+11. [AI-Generated Code: Patterns to Watch For](#11-ai-generated-code-patterns-to-watch-for)
+12. [Innovative Analysis Techniques](#12-innovative-analysis-techniques)
 
 ---
 
@@ -413,6 +415,118 @@ Verify under realistic failure conditions, not just ideal conditions.
 
 ---
 
+## 11. AI-Generated Code: Patterns to Watch For
+
+### Common Failure Modes of AI-Generated Code
+
+AI-generated code has specific, predictable failure patterns different from human-written code:
+
+1. **Plausible-but-wrong patterns**: Code that LOOKS correct, follows naming conventions, has proper structure — but contains subtle logic errors. AI optimizes for "looks like good code" not "is correct code."
+2. **Hallucinated APIs**: Calling functions, methods, or library features that don't exist. 20% of package recommendations are fabricated ("slopsquatting").
+3. **Overcorrection bias**: When asked to verify, AI incorrectly flags correct code as wrong. Self-verification is unreliable.
+4. **Security blindness**: 29-45% of AI-generated code contains security vulnerabilities. AI reproduces insecure patterns from training data.
+5. **Incomplete error handling**: Happy path is well-implemented; error paths are shallow or missing entirely.
+6. **Copy-paste with drift**: AI generates similar code blocks that should be parameterized, with subtle inconsistencies between copies.
+7. **Outdated patterns**: Using deprecated APIs, old library versions, or patterns that were common in training data but are no longer best practice.
+8. **Context window amnesia**: In long sessions, AI loses track of decisions made earlier, leading to inconsistent implementations across files.
+
+### What to Specifically Look For in AI-Written Codebases
+
+**Architecture level:**
+- Inconsistent patterns between modules (different modules written in different sessions)
+- Over-engineering in some areas, under-engineering in others (depends on prompt quality)
+- Missing cross-cutting concerns in later-added modules (auth, logging, validation)
+- Feature flags or configuration that was added "just in case" but never used (YAGNI violations)
+
+**Code level:**
+- Functions that look complete but don't handle edge cases (empty arrays, null values, concurrent access)
+- Validation in the UI but not the API (or vice versa)
+- Error handling that catches and swallows exceptions silently
+- Database queries without proper indexing consideration
+- Missing transaction boundaries on multi-step operations
+- Race conditions in state changes (AI rarely considers concurrency)
+
+**Test level:**
+- Tests that assert `toBeTruthy()` instead of specific values
+- Tests that test the mock, not the implementation
+- Missing negative test cases (what should FAIL)
+- Tests that pass for the wrong reason (assertion on wrong value, accidentally always true)
+
+**Integration level:**
+- Missing timeout configuration on external calls
+- No retry logic or incorrect retry logic (retrying non-idempotent operations)
+- Missing circuit breakers for external dependencies
+- Optimistic assumptions about external API response formats
+
+### The 80/20 of AI Code Verification
+
+Research shows these checks catch the most AI-generated bugs:
+
+1. **Run the code** — 60% of AI-generated bugs are caught by simply running it. Artifacts don't lie.
+2. **Check error paths** — trace what happens when things FAIL. This is where AI code is weakest.
+3. **Check concurrency** — AI rarely considers multi-user scenarios. What happens with concurrent requests?
+4. **Check the edges** — empty inputs, null values, maximum values, unicode, negative numbers.
+5. **Cross-reference implementations** — if the same logic exists in multiple places, check they're consistent.
+
+---
+
+## 12. Innovative Analysis Techniques
+
+### Code Forensics (Git History as Crime Scene)
+
+Adam Tornhill's methodology: your git history reveals where bugs hide.
+- **Hotspot = Churn × Complexity**: Files that change often AND are complex account for 80% of bugs
+- **Temporal coupling**: Files committed together have hidden coupling
+- **Code age**: Ancient complex code that suddenly needs to change is highest risk
+- **Bus factor**: Code only one person understands is knowledge risk
+
+Tools: code-maat, code-forensics, Hercules
+
+### Graph-Based Code Analysis
+
+Treat the codebase as a graph, apply graph algorithms:
+- **Community detection** (Louvain) → discover actual module boundaries vs intended ones
+- **Betweenness centrality** → find "god modules" that sit on too many paths
+- **PageRank** → identify most "important" files (highest cascade risk)
+- **Cycle detection** → find circular dependencies including multi-hop chains
+
+Tools: dependency-cruiser, typescript-graph, Graph-Code (Neo4j)
+
+### Information Flow / Taint Analysis
+
+Track sensitive data from sources (user input) to sinks (database queries, logs, API calls):
+- Define all entry points as taint sources
+- Define dangerous operations as sinks
+- Verify sanitization exists on every path
+
+Tools: CodeQL, Semgrep (NestJS DI-aware since 2025), SonarQube taint analysis
+
+### Semantic Clone Detection
+
+Find code that does the same thing but looks different (Type-3/4 clones):
+- Token-based (fast, catches exact copies): jscpd
+- AST-based (catches renamed clones): Semgrep
+- Embedding-based (catches semantic equivalents): LLM-assisted clustering
+
+In large codebases, expect 10-20% semantic duplication — particularly in validation, error handling, and data transformation.
+
+### Architectural Conformance Checking
+
+Define architecture as code, enforce automatically:
+- **ArchUnitTS**: Write architecture rules as TypeScript tests
+- **dependency-cruiser**: Rule-based dependency validation with CI integration
+- **SonarQube Architecture as Code**: Architectural drift detection (2025)
+
+### Mutation Testing
+
+"Who guards the guards?" — deliberately introduce bugs to test your tests:
+- **Stryker Mutator** for TypeScript: flips operators, removes conditionals, changes return values
+- If tests still pass after mutation → test has blind spot
+- Target hotspot files from code forensics for maximum value
+- Above 80% mutation score = high quality; below 50% = critical gap
+
+---
+
 ## Sources
 
 ### Formal Methods & Verification
@@ -470,6 +584,18 @@ Verify under realistic failure conditions, not just ideal conditions.
 - RAG for 10k Repos — Qodo
 - RAG vs Long Context 2026 — markaicode.com
 - Manage RAG Context Windows — markaicode.com
+
+### Innovative Analysis Techniques
+- Your Code as a Crime Scene (2nd Ed) — Adam Tornhill, Pragmatic Bookshelf
+- code-maat: VCS Mining Tool — GitHub
+- ArchUnitTS — TypeScript Architecture Testing — GitHub
+- dependency-cruiser — Rule-based Dependency Validation — npm
+- Stryker Mutator for JavaScript/TypeScript — stryker-mutator.io
+- CodeQL: Analyzing Data Flow in JavaScript/TypeScript — GitHub
+- Semgrep JavaScript Vulnerability Detection Deep Dive (2025)
+- SonarQube Architecture as Code (2025) — SecurityBoulevard
+- Knip: Dead Code Detector for TypeScript — dev.to
+- jscpd: Copy/Paste Detector — jscpd.dev
 
 ### Safety & Other Disciplines
 - Swiss Cheese Model — Wikipedia, SKYbrary

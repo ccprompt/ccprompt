@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 8 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 38 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 27 slash commands into Claude Code. Eight of them form a loop that runs every session:
+ccprompt installs 38 slash commands into Claude Code. Eight of them form a loop that runs every session:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,9 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 27 Commands
+## All 38 Commands
 
-### Session lifecycle (the core loop)
+### Session Lifecycle (the core loop)
 
 | Command | Phase | What it does |
 |---------|-------|-------------|
@@ -94,38 +94,69 @@ One developer. Portfolio-level output.
 | `/architect` | Design before you build. Constraints first, then options, then decide |
 | `/refactor` | Safe restructuring: characterization tests first, small steps |
 
-### Debugging and fixing
+### Debugging and Fixing
 
 | Command | What it does |
 |---------|-------------|
 | `/debug-rootcause` | Find the REAL cause. 5 WHYs technique. Fix cause, not symptom |
 
-### Quality and security
+### Code Review
 
 | Command | What it does |
 |---------|-------------|
-| `/code-review` | Pre-commit quality gate with security checklist |
-| `/test-audit` | Test coverage gaps and test quality audit |
+| `/change-review` | PR/MR/diff analysis — correctness, security, data, tests, readability |
+| `/code-review` | Full senior engineer codebase audit — architecture to observability |
+| `/crm-review` | CRM-specific codebase audit (NestJS, Angular, TypeORM, PostgreSQL) |
+
+### Deep Technical Analysis
+
+| Command | What it does |
+|---------|-------------|
+| `/resilience-audit` | How the system handles failure — timeouts, retries, circuit breakers, cascading failures |
+| `/database-audit` | Schema design, index strategy, query patterns, transactions, migrations, data integrity |
+| `/api-audit` | Contract consistency, error responses, versioning, pagination, idempotency |
+| `/observability-audit` | Logging, metrics, tracing, health checks, alerting quality, SLOs |
+| `/tech-debt-analysis` | Hotspot mapping, debt quantification (principal/interest/risk), paydown roadmap |
+
+### Security and Quality
+
+| Command | What it does |
+|---------|-------------|
 | `/security-audit` | Full OWASP Top 10 mapped security review |
-| `/best-practices` | Code quality standards audit |
-| `/game-tester` | Play and test games with Playwright MCP, find bugs and UX issues |
+| `/best-practices` | Deep research on best practices for your specific tech stack |
+| `/test-audit` | Find fake, hollow, and silently passing tests |
+| `/dependency-audit` | Supply chain health: vulnerabilities, abandoned packages, license risks |
+| `/accessibility-audit` | WCAG compliance and inclusive design audit |
+
+### Performance
+
+| Command | What it does |
+|---------|-------------|
+| `/performance-hunt` | Proactive performance bug hunting — O(n²), memory leaks, N+1, missing indexes |
+| `/bug-hunt` | Proactive logic bug hunting — data corruption, race conditions, silent failures |
+
+### Testing
+
+| Command | What it does |
+|---------|-------------|
 | `/flow-tester` | Systematically test every logical flow end-to-end |
+| `/game-tester` | Play and test games with Playwright MCP, find bugs and UX issues |
 | `/asset-quality-audit` | Audit game asset quality, consistency, AI art defects |
 
-### Thinking and planning
+### Thinking and Planning
 
 | Command | What it does |
 |---------|-------------|
 | `/think-first` | Developer plans first, AI independently, compare blind spots |
 | `/plan-certain` | Stop, understand fully, plan precisely, then act |
 | `/research-investigate` | Deep dive, brainstorm, plan with all context |
-| `/emergency-handover` | Fast context save when things are critical |
 
 ### Operations
 
 | Command | What it does |
 |---------|-------------|
 | `/deploy-checklist` | Pre-deployment validation. Every time. No exceptions |
+| `/emergency-handover` | Fast context save when things are critical |
 
 ### Setup
 
@@ -138,7 +169,8 @@ Every template supports `$ARGUMENTS` for passing context directly:
 ```
 /debug-rootcause TypeError in UserService.create()
 /feature-build add dark mode toggle
-/refactor extract auth logic from UserController
+/resilience-audit payment processing service
+/database-audit users and orders tables
 ```
 
 ## How It Works
@@ -160,7 +192,7 @@ ccprompt install .
 
 ```
 ccprompt install [path]      # Install templates as slash commands
-ccprompt templates           # List all 27 templates
+ccprompt templates           # List all 38 templates
 ccprompt show <template>     # View a template in the terminal
 ccprompt copy <template>     # Copy a template to clipboard
 ccprompt new-template <name> # Create a custom template

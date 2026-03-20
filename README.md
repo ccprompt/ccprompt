@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 51 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 52 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 51 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 52 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,9 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 51 Commands
+## All 52 Commands
 
-> **New in 3.3.0:** New game-completionist template — 100% feature coverage via source code research + systematic Playwright MCP playthrough with enforced detailed screenshot analysis. **3.2.0:** Deep upgrade of game-tester (Feel Stack, Juice Checklist, genre-specific mechanics matrices, mandatory Playwright MCP), asset-quality-audit (Assets-in-Motion, Art-Serves-Gameplay phases), new game-design-audit template, version fix. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
+> **New in 3.4.0:** New auto-analyze template — AI reads project context and picks the right analysis for you. **3.3.0:** New game-completionist template — 100% feature coverage via source code research + systematic Playwright MCP playthrough with enforced detailed screenshot analysis. **3.2.0:** Deep upgrade of game-tester (Feel Stack, Juice Checklist, genre-specific mechanics matrices, mandatory Playwright MCP), asset-quality-audit (Assets-in-Motion, Art-Serves-Gameplay phases), new game-design-audit template, version fix. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
 
 ### Session Lifecycle (the core loop)
 
@@ -164,6 +164,7 @@ One developer. Portfolio-level output.
 | `/plan-certain` | Stop, understand fully, plan precisely, then act |
 | `/research-investigate` | Deep dive, brainstorm, plan with all context |
 | `/migration-assessment` | Before major upgrades — breaking changes, dependency compat, blast radius, phased plan |
+| `/auto-analyze` | AI reads all context and picks the highest-impact analysis template to run right now |
 
 ### Operations
 

@@ -11,7 +11,7 @@ const program = new Command();
 program
   .name('ccprompt')
   .description('AI coding prompts as Claude Code slash commands')
-  .version('2.1.0');
+  .version(require('./package.json').version);
 
 // --- Helper functions ---
 

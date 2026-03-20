@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 49 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 50 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 49 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 50 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -70,9 +70,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 49 Commands
+## All 50 Commands
 
-> **New in 3.1.0:** 4 final analysis templates (error-handling-audit, concurrency-audit, config-audit, migration-assessment). **3.0.0:** 7 analysis templates, removed crm-review, verify-thorough 7-layer rewrite, deep-scan, KNOWLEDGEBASE.md.
+> **New in 3.2.0:** Deep upgrade of game-tester (Feel Stack, Juice Checklist, genre-specific mechanics matrices, mandatory Playwright MCP), asset-quality-audit (Assets-in-Motion, Art-Serves-Gameplay phases), new game-design-audit template, version fix. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
 
 ### Session Lifecycle (the core loop)
 
@@ -151,8 +151,9 @@ One developer. Portfolio-level output.
 | Command | What it does |
 |---------|-------------|
 | `/flow-tester` | Systematically test every logical flow end-to-end |
-| `/game-tester` | Play and test games with Playwright MCP, find bugs and UX issues |
-| `/asset-quality-audit` | Audit game asset quality, consistency, AI art defects |
+| `/game-tester` | Play games via Playwright MCP — Feel Stack, Juice Checklist, genre matrices, exhaustive screenshot analysis |
+| `/game-design-audit` | Evaluate if a game is actually GOOD — core mechanic feel, engagement loops, difficulty curves, comparative benchmarks |
+| `/asset-quality-audit` | Audit game assets in-game — static quality, AI art defects, assets-in-motion, art-serves-gameplay |
 
 ### Thinking and Planning
 

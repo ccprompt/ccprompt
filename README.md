@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 55 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 56 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 55 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 56 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -42,14 +42,16 @@ ccprompt installs 55 slash commands into Claude Code. Eight of them form a core 
        |
 /housekeeping           Clean up, consolidate, leave it better
        |
-/low-context-handover   Save state for the next session
+/handover               Deliberate, thorough session handover
+       |
+/low-context-handover   Save state when context is running low
 ```
 
 Every session starts at the top. Every session ends at the bottom. The middle adapts to whatever you're building. The handover connects one session to the next, so you never lose context.
 
 ### Start simple, add layers
 
-**Week 1:** Just use `/kickoff` to start and `/low-context-handover` to end. That alone puts you ahead.
+**Week 1:** Just use `/kickoff` to start and `/handover` to end. That alone puts you ahead.
 
 **Week 3:** Add `/read-handover` and `/verify-thorough`. Now you're preserving context and catching bugs.
 
@@ -70,9 +72,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 55 Commands
+## All 56 Commands
 
-> **New in 3.5.0:** 3 new templates — project-stats (full codebase census), contributor-analysis (who built this, commit quality, knowledge risks), ui-deep-dive (exhaustive Playwright MCP visual/functional analysis for websites/SaaS). **3.4.0:** auto-analyze template. **3.3.0:** game-completionist template. **3.2.0:** Deep upgrade of game-tester, asset-quality-audit, new game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
+> **New in 3.6.0:** handover template — deliberate, thorough session handover when you have plenty of context. **3.5.0:** project-stats, contributor-analysis, ui-deep-dive. **3.4.0:** auto-analyze. **3.3.0:** game-completionist. **3.2.0:** Deep upgrade game templates, game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
 
 ### Session Lifecycle (the core loop)
 
@@ -85,7 +87,8 @@ One developer. Portfolio-level output.
 | `/visual-verify` | Verify | Visual and browser verification: screenshots, console, Playwright |
 | `/principles-check` | Audit | Systematic audit against your engineering principles |
 | `/housekeeping` | Clean | Cleanup, organize, consolidate. Leave it better |
-| `/low-context-handover` | Save | Save session state for the next session to pick up |
+| `/handover` | Save | Deliberate, thorough session handover — take your time, document everything |
+| `/low-context-handover` | Save | Save session state when context is running low (~5-15%) |
 
 ### Building
 
@@ -175,7 +178,7 @@ One developer. Portfolio-level output.
 |---------|-------------|
 | `/deploy-checklist` | Pre-deployment validation. Every time. No exceptions |
 | `/go-live-readiness` | Pre-production gate — 7 gates from functional to organizational readiness |
-| `/emergency-handover` | Fast context save when things are critical |
+| `/emergency-handover` | Crash-landing context save when under 5% context |
 
 ### Setup
 

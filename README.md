@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 56 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 57 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 56 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 57 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -72,9 +72,9 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 56 Commands
+## All 57 Commands
 
-> **New in 3.6.0:** handover template — deliberate, thorough session handover when you have plenty of context. **3.5.0:** project-stats, contributor-analysis, ui-deep-dive. **3.4.0:** auto-analyze. **3.3.0:** game-completionist. **3.2.0:** Deep upgrade game templates, game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
+> **New in 3.7.0:** game-microscope — frame-level mechanic testing with data extraction, burst screenshots, and injected instrumentation. **3.6.0:** handover template. **3.5.0:** project-stats, contributor-analysis, ui-deep-dive. **3.4.0:** auto-analyze. **3.3.0:** game-completionist. **3.2.0:** Deep upgrade game templates, game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
 
 ### Session Lifecycle (the core loop)
 
@@ -159,6 +159,7 @@ One developer. Portfolio-level output.
 | `/game-tester` | Play games via Playwright MCP — Feel Stack, Juice Checklist, genre matrices, exhaustive screenshot analysis |
 | `/game-design-audit` | Evaluate if a game is actually GOOD — core mechanic feel, engagement loops, difficulty curves, comparative benchmarks |
 | `/game-completionist` | 100% feature coverage — research source code first, then play every feature via Playwright MCP with enforced detailed screenshot analysis |
+| `/game-microscope` | Frame-level mechanic testing — data extraction + burst screenshots + instrumentation for animations, state transitions, feedback chains |
 | `/asset-quality-audit` | Audit game assets in-game — static quality, AI art defects, assets-in-motion, art-serves-gameplay |
 | `/ui-deep-dive` | Exhaustive Playwright MCP visual & functional analysis — every page, state, form, responsive breakpoint |
 

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 
-**A complete AI coding workflow in 57 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
+**A complete AI coding workflow in 58 slash commands.** Not a template collection. A session lifecycle that turns Claude Code into a repeatable production system.
 
 ```bash
 npx @ccprompt/cli install .
@@ -23,7 +23,7 @@ The missing piece isn't better prompts. It's a **workflow**.
 
 ## The Session Lifecycle
 
-ccprompt installs 57 slash commands into Claude Code. Eight of them form a core loop:
+ccprompt installs 58 slash commands into Claude Code. Eight of them form a core loop:
 
 ```
 /read-handover          Pick up where the last session left off
@@ -72,15 +72,16 @@ Each project runs its own lifecycle. Each produces its own handover. When you sw
 
 One developer. Portfolio-level output.
 
-## All 57 Commands
+## All 58 Commands
 
-> **New in 3.7.0:** game-microscope — frame-level mechanic testing with data extraction, burst screenshots, and injected instrumentation. **3.6.0:** handover template. **3.5.0:** project-stats, contributor-analysis, ui-deep-dive. **3.4.0:** auto-analyze. **3.3.0:** game-completionist. **3.2.0:** Deep upgrade game templates, game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
+> **New in 3.8.0:** relentless — autonomous unattended-session driver that overrides the model's premature-stopping bias: keep finding and shipping high-value work until context runs out, not until the model feels done. **3.7.0:** game-microscope — frame-level mechanic testing with data extraction, burst screenshots, and injected instrumentation. **3.6.0:** handover template. **3.5.0:** project-stats, contributor-analysis, ui-deep-dive. **3.4.0:** auto-analyze. **3.3.0:** game-completionist. **3.2.0:** Deep upgrade game templates, game-design-audit. **3.1.0:** 4 final analysis templates. **3.0.0:** 7 analysis templates, verify-thorough 7-layer rewrite, deep-scan.
 
 ### Session Lifecycle (the core loop)
 
 | Command | Phase | What it does |
 |---------|-------|-------------|
 | `/read-handover` | Resume | Pick up where a previous session left off via HANDOVER.md |
+| `/relentless` | Drive | Run unattended: keep finding and shipping high-value work until context runs out, never stop early to ask "what's next?" |
 | `/strategic-next` | Plan | Find what to build next with research, evaluation, prioritization |
 | `/creative-brainstorm` | Explore | Think laterally, explore wild ideas, converge on the best one |
 | `/verify-thorough` | Verify | 7-layer falsification stack. Try to BREAK it, not confirm it |

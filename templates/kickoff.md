@@ -12,7 +12,8 @@ This is a new session. You know NOTHING yet. Do NOT assume, do NOT guess, do NOT
 
 ## Don't
 
-- Don't start coding before reading ALL documentation
+- Don't start coding before reading the core docs below
+- Don't read every .md in the repo — big knowledge bases and old handovers burn context; open docs on demand when a task touches them
 - Don't assume you know the project from the file names
 - Don't skip reading HANDOVER.md — it has critical context from the last session
 - Don't make changes until the user confirms your understanding
@@ -20,15 +21,14 @@ This is a new session. You know NOTHING yet. Do NOT assume, do NOT guess, do NOT
 
 ## Step 1: Read Everything
 
-Read ALL of these in full — no skimming, no shortcuts:
-- `CLAUDE.md` — project rules, overview, architecture (if exists)
+Read these in full — no skimming:
+- `CLAUDE.md` — project rules, overview, architecture (already loaded; reread if long)
 - `README.md` — what this project is
-- `HANDOVER.md` — what the last session left behind (if exists)
-- Every `.md` file in root and `docs/`
+- `HANDOVER.md` — current state and next steps (if exists). If it is over ~150 lines or stacks several "Session N" blocks, read only the newest block and flag the bloat to the user
 - `package.json` / `pyproject.toml` / equivalent — dependencies, scripts
-- Recent git log — what happened recently
+- `git log --oneline -20` — what happened recently (history lives here, not in .md files)
 
-Do NOT proceed until you've read them all.
+Then list (don't read) the rest: `ls docs/` and root `.md` files. Open one only when the task touches its topic. Files over ~50 KB: grep or read the relevant section, never the whole file.
 
 ## Step 2: Understand the Project
 
@@ -81,7 +81,7 @@ Map risk to verification depth:
 This is critical — context is finite:
 - Estimate how much context this session needs
 - If the task is large, plan for a handover before context runs out
-- If the task needs more than one session, create a `DECISIONS.md` to log choices made
+- If the task needs more than one session, carry decisions in HANDOVER.md (Dead Ends) and commit messages — don't create new log files
 - Always keep enough reserve to do a clean handover (~15%)
 
 ## Step 7: Confirm Alignment
@@ -96,7 +96,7 @@ Before ANY work:
 ## Rules for This Session
 
 - Follow all principles in PRINCIPLES.md (DRY, SOLID, KISS, YAGNI)
-- Document every decision and its reasoning
+- Put the reasoning for decisions in commit messages; promote only durable rules to CLAUDE.md (one line each, no story)
 - Commit regularly with clear, conventional messages
 - If context gets low (~15%), STOP and switch to handover protocol immediately
 - No heroics — if something is unclear, ask

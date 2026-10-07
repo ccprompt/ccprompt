@@ -8,13 +8,15 @@
 
 **Project to configure:** $ARGUMENTS
 
-CLAUDE.md is a living document, not a configuration file. It grows with every mistake caught, every convention established, every pattern learned. Boris Cherny (creator of Claude Code): "Anytime we see Claude do something incorrectly, we add it to the CLAUDE.md, so Claude knows not to do it next time."
+CLAUDE.md is a living document, not a configuration file. Boris Cherny (creator of Claude Code): "Anytime we see Claude do something incorrectly, we add it to the CLAUDE.md, so Claude knows not to do it next time." **But it is loaded into EVERY session, so it must also shrink.** Every rule added means checking whether an old one can be merged, shortened or evicted. A CLAUDE.md that only grows ends up bigger than the context window (this has happened: 810 KB, ~200k tokens).
 
 ## Don't
 
 - Don't dump everything in one CLAUDE.md (use the Hot/Warm/Cold hierarchy)
 - Don't include information that changes frequently (use hooks for dynamic context)
-- Don't exceed 200 lines in root CLAUDE.md (it's always loaded, context is precious)
+- Don't exceed 200 lines / 20 KB in root CLAUDE.md (it's always loaded, context is precious). A global hook blocks commits that grow it past 20 KB
+- Don't write stories into rules: no session numbers, no dates, no "found in S412, fixed in S413", no measured A/B numbers. State the rule and the one-clause reason. The story goes in the commit message
+- Don't annotate superseded rules (strike-through, "UPDATE:", "was X until") — REPLACE them. Git keeps the old text
 - Don't duplicate information already in README.md or package.json
 - Don't forget to update CLAUDE.md when conventions change
 
@@ -64,10 +66,7 @@ The root CLAUDE.md is always loaded. Keep it lean (under 200 lines). Include ONL
 - Patterns that look right but are wrong in this project
 - Common mistakes with the tech stack
 
-**Current sprint/focus (3-5 lines):**
-- What's being worked on now
-- Key decisions made recently
-- Known issues or blockers
+**NOT here: current sprint, recent decisions, known issues.** Those change every session and belong in HANDOVER.md.
 
 ## Step 3: Build Warm Memory (.claude/rules/)
 
@@ -82,7 +81,9 @@ For domain-specific patterns that don't apply to every task:
   frontend.md             # Component patterns, state management, styling
 ```
 
-Each rules file loads only when Claude works with matching files. Keep each focused on one domain.
+A rules file loads only when Claude works with matching files **if it has `paths:` frontmatter** (e.g. `paths: ["src/api/**"]`). Without it, it is loaded every session just like CLAUDE.md, so it counts toward the budget.
+
+Topic detail that is not tied to paths goes in `docs/rules/<topic>.md`, with a one-line pointer in CLAUDE.md ("Before touching the renderer, read `docs/rules/renderer.md`"). Keep each focused on one domain.
 
 ## Step 4: Configure Context Re-injection
 
@@ -107,7 +108,7 @@ Include in the re-injection: the 3-5 most important rules that Claude tends to f
 ## Step 5: Set Up Cold Memory
 
 For archival context that loads on demand:
-- `HANDOVER.md` for session continuity
+- `HANDOVER.md` for session continuity — current state only, overwritten each session, ≤ 150 lines
 - `docs/` for detailed documentation
 - `knowledge-base/` for research and decisions
 - MCP servers for external data (GitHub, Slack, browser state)
@@ -118,8 +119,8 @@ Reference these in CLAUDE.md: "For detailed API docs, see `docs/api.md`"
 
 Add this practice to your team workflow:
 - During code reviews, tag `@.claude` when you spot a convention violation
-- Add the rule to CLAUDE.md as part of the PR
-- Over time, the CLAUDE.md learns from every code review
+- Add the rule to CLAUDE.md as part of the PR — or sharpen an existing rule instead of adding a near-duplicate
+- When CLAUDE.md passes 200 lines, evict: merge overlapping rules, delete rules the code/tests/lint now enforce, move a topic's detail to `docs/rules/`
 
 ## Step 7: Verify the Configuration
 
@@ -167,3 +168,4 @@ Test the CLAUDE.md by starting a fresh session:
 - Context re-injection hook preserves critical rules through compaction
 - Fresh session correctly understands project identity, conventions, and anti-patterns
 - CLAUDE.md reflects actual project state (not aspirational or outdated)
+- No session numbers, dates, or incident stories in CLAUDE.md — rules only

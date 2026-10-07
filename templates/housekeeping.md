@@ -12,7 +12,7 @@ Perform a full housekeeping audit. Make sure all is well documented and organize
 
 ## Don't
 
-- Don't delete files without understanding what they do first
+- Don't delete files without understanding what they do first (but stale DOC content is fine to delete — git keeps it)
 - Don't consolidate docs that serve different audiences
 - Don't remove "unused" code without verifying it's actually unused
 - Don't make this a refactoring session – focus on cleanup only
@@ -45,6 +45,12 @@ Read EVERY markdown file in the project. For each one, ask:
 - **Duplicate** → Merge into the single source of truth, delete the copy
 - **Orphaned** → If no one needs it, remove it
 - **Missing** → If there's a gap (feature without docs), flag it
+
+**Doc diet (agent-written docs bloat fastest):**
+- `CLAUDE.md` over 200 lines / 20 KB → strip session numbers, dates and incident stories from rules; merge duplicates; delete rules that code, tests or lint now enforce; move topic detail to `docs/rules/<topic>.md` with a one-line pointer
+- `HANDOVER.md` over 150 lines / 12 KB, or containing several "Session N" blocks → rewrite to the newest state only (State, Next, Traps, Dead Ends, Open Questions). Lift still-true traps out of old sessions first. Delete the rest; note the pre-cleanup commit in your commit message so it's recoverable with `git show <hash>:HANDOVER.md`
+- `*_ARCHIVE.md`, `*_RECORD_*.md`, `docs/handovers/` and session logs → delete; git is the archive
+- Byte-identical docs copied between repos (shared KNOWLEDGEBASE, PRINCIPLES) → fine if intentional, but don't let one repo's copy accumulate project-specific history
 
 **Key docs to verify:**
 - `CLAUDE.md` – Does it accurately describe the project?
@@ -141,7 +147,7 @@ This is the most important step. Consolidate aggressively:
 - Redundant helper functions → single utility
 - Multiple similar patterns → standardize on one
 
-**Before removing anything, document:**
+**Before removing anything, record in the COMMIT MESSAGE (not a new doc):**
 - What was removed and why
 - What it was replaced with (if applicable)
 - Risk of removal (none/low/medium)

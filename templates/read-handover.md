@@ -1,6 +1,6 @@
 # Read Handover
 
-**When to use:** Start of a new session when a previous session left a HANDOVER.md. The companion to `/low-context-handover` — that one writes it, this one reads it and picks up where the last session stopped.
+**When to use:** Start of a new session when a previous session left a HANDOVER.md. The companion to `/handover`, `/low-context-handover` and `/emergency-handover` — they write it, this one reads it and picks up where the last session stopped.
 
 **Role:** You are a session successor. Your job is to absorb everything the previous session documented, verify the current state matches what was described, and present a clear picture to the user so they can decide what to focus on.
 
@@ -13,7 +13,7 @@ A previous session ended and left you a handover. Your job is to pick up where i
 ## Don't
 
 - Don't skip reading HANDOVER.md — it's the single most important document right now
-- Don't re-explore approaches the previous session already rejected (check the Decisions table)
+- Don't re-explore approaches the previous session already rejected (check Dead Ends)
 - Don't assume the handover is wrong — verify first, then trust or challenge with evidence
 - Don't ignore the rollback info — you may need it
 - Don't redo work that's already marked as completed without checking it first
@@ -23,14 +23,15 @@ A previous session ended and left you a handover. Your job is to pick up where i
 
 Read HANDOVER.md completely. No questions first. No waiting. Just read it. Extract and internalize:
 
-1. **Summary** — What happened? What's the current state?
-2. **Completed items** — What's done? Don't redo these.
-3. **In-progress items** — What's partially done? This is likely the starting point.
-4. **Decisions made** — What was chosen and WHY? What was rejected and WHY?
-5. **Known issues** — What's broken or fragile?
-6. **Next steps** — What was the priority order?
-7. **Rollback info** — What's the escape plan if things go wrong?
-8. **Files modified** — What changed recently?
+1. **State** — What works, what's broken, what's half done?
+2. **Next** — What was the priority order? This is likely the starting point.
+3. **Traps** — What bites?
+4. **Dead Ends** — What was rejected and WHY?
+5. **Open Questions** — What's unresolved?
+
+What happened in the last session and which files changed is in git, not the handover: `git log --stat -15`.
+
+**If HANDOVER.md is bloated** (over ~150 lines, or it contains several stacked "Session N" blocks): read only the NEWEST block, then tell the user the file breaks the doc contract and offer to rewrite it to the current state only (`/housekeeping docs`).
 
 ## Step 2: Read Supporting Context
 
@@ -38,7 +39,7 @@ After the handover, read in this order:
 - `CLAUDE.md` — project rules and conventions (always authoritative)
 - `PRINCIPLES.md` — engineering principles (if exists)
 - Recent git log — verify the commits match what the handover describes
-- Any files listed in "Files Modified This Session"
+- Files the Next steps point at
 
 ## Step 3: Verify Current State
 
@@ -56,9 +57,9 @@ Document any discrepancies you find.
 
 This is critical. The previous session made decisions for reasons:
 
-- Review every row in the Decisions table
-- Understand WHY each alternative was rejected
-- Note any decisions you think might need revisiting (but don't override without evidence)
+- Review every Dead End and Trap
+- Understand WHY each was rejected
+- If a Trap is now guarded by code or a test, or a Dead End is no longer tempting, note it — your own handover will drop it
 
 ## Step 5: Present Status & Ask
 
@@ -102,8 +103,8 @@ Once the user tells you what to focus on:
 
 - Start coding immediately — no more discussion needed
 - Honor inherited decisions unless the user explicitly overrides them
-- If context gets low (~40%), start thinking about your own handover
 - If context hits ~15%, stop and run `/low-context-handover`
+- Your handover OVERWRITES this one — never append below it
 
 ## Success Criteria
 

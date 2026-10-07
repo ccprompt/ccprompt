@@ -119,7 +119,7 @@ If the scan surfaces anything (it almost always will), that's your next unit of 
 
 ## Step 7: Land the session cleanly
 
-When context hits ~15% remaining, stop starting new work and run `/low-context-handover` (or `/handover` if you have room). Write the handover at the end, from memory of what actually happened — not reconstructed guesses. Commit and push it like any other change. A relentless session that ends with a crash and no handover wasted its last hour.
+When context hits ~15% remaining, stop starting new work and run `/low-context-handover` (or `/handover` if you have room). Write the handover at the end, from memory of what actually happened — not reconstructed guesses. OVERWRITE the previous handover (current state only, ≤ 150 lines) — never append a session block. Commit and push it like any other change. A relentless session that ends with a crash and no handover wasted its last hour.
 
 ## Don't
 
@@ -141,5 +141,5 @@ When context hits ~15% remaining, stop starting new work and run `/low-context-h
 - Every unit of work was verified (tests/build/visual + edge cases), not just written.
 - Each unit shipped as its own commit, pushed immediately when a remote existed; no `--no-verify`.
 - At least one completeness scan was run at every felt "stopping point," and its findings became the next units of work.
-- Assumptions made in place of asking were documented (in commits and the handover).
+- Assumptions made in place of asking were documented (in commit messages; still-open ones in the handover).
 - The session ended with a current, committed, pushed handover — or with genuinely nothing high-value left to do.

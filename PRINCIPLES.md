@@ -464,6 +464,18 @@ describe('UserService', () => {
 - Delete redundant or outdated files
 - Consolidate rather than create new docs
 
+### Agent-Written Docs (CLAUDE.md, HANDOVER.md)
+
+**Rule:** Docs describe the present. Git describes the past.
+
+- **CLAUDE.md = rules, ≤ 200 lines / 20 KB.** Loaded into every session, so every byte is paid every time. No session numbers, dates or incident stories; state the rule and a one-clause reason
+- **Replace, don't annotate.** A superseded rule is rewritten, not struck through or followed by "UPDATE:". Git keeps the old text
+- **HANDOVER.md = current state, ≤ 150 lines / 12 KB, overwritten every session.** State, Next, Traps, Dead Ends, Open Questions. Never stack "Session N" blocks
+- **No archive files.** HANDOVER_ARCHIVE.md and session logs re-bloat and nobody reads them; `git log -p -- HANDOVER.md` is the archive
+- **Narrative goes in commit messages.** What was done, which files, why, rollback points
+- **Overflow goes on demand.** Topic detail moves to `docs/rules/<topic>.md` with a one-line pointer in CLAUDE.md
+- Enforced by `~/.claude/hooks/doc-budget.mjs`: a commit that grows CLAUDE.md past 20 KB or HANDOVER.md past 12 KB is blocked. Per-repo overrides in `.docbudget`
+
 
 ## Performance Principles
 

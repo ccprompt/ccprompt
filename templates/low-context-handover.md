@@ -2,7 +2,7 @@
 
 **When to use:** Context window is ~5-15% remaining. You still have room to do this properly. Do NOT wait for emergency — act now while you can still think clearly.
 
-**Role:** You are now a documentarian. Your only job is to capture the complete state so the next session can pick up seamlessly.
+**Role:** You are now a documentarian. Your only job is to capture the CURRENT state so the next session can pick up seamlessly.
 
 ---
 
@@ -10,83 +10,58 @@
 
 LOW CONTEXT. STOP all tasks. STOP all implementation. STOP all debugging. Nothing else matters except documenting the current state RIGHT NOW.
 
+## The Doc Contract (binding)
+
+- **OVERWRITE HANDOVER.md** — never append below the previous one. Git keeps the old version (`git log -p -- HANDOVER.md`).
+- **Max 150 lines / 12 KB.** A global hook blocks commits that grow it past the cap.
+- **No session log, no commit lists, no file-change lists, no archive files.** Git already has all of that.
+
 ## Don't
 
 - Don't try to "just finish this one thing" — you will run out of context
-- Don't write incomplete handovers — the next session depends on this
 - Don't leave uncommitted changes without documenting them
-- Don't skip the rollback info — the next session needs to know how to undo
-- Don't skip the decisions table — rejected approaches are as valuable as chosen ones
+- Don't copy forward the previous handover's sections — keep only what is still true
 
-## Step 1: 30-Second Summary (Write This First)
+## Step 1: Secure Partial Work
 
-Before anything else, write one paragraph:
-- What was the focus of this session?
-- What's done? What's not done?
-- What's the single most important thing the next session needs to know?
+- **Uncommitted changes?** → `git stash` or commit with `WIP:` prefix (explain in the commit body)
+- **Broken state?** → Note what's broken and how to fix it under State
+- **Tests failing?** → Note which and why under State
 
-## Step 2: Handle Partial Work
-
-Secure any in-progress work:
-- **Uncommitted changes?** → `git stash` or commit with `WIP:` prefix
-- **Partial implementation?** → Document exactly what's done, what's missing
-- **Broken state?** → Document what's broken and how to fix it
-- **Tests failing?** → Document which tests and why
-
-## Step 3: Create/Update HANDOVER.md
-
-Create `HANDOVER.md` in the project root with this structure:
+## Step 2: Overwrite HANDOVER.md
 
 ```markdown
 # Handover
 
-## Summary
-[One paragraph: what happened, what's the state, what's next]
+Updated: [date] · Branch: [branch] · Last commit: [short hash]
 
-## Completed
-- [x] [Thing that's done and working]
-- [x] [Another completed item]
+## State
+[3 to 8 lines: what works, what's broken, what's half done and how to resume it]
 
-## In Progress
-- [ ] [Partial work] — Status: [what's done, what's left]
-- [ ] [Another item] — Blocked by: [reason]
+## Next (priority order)
+1. **[Action]** — [file/area, what to do]
+2. **[Action]** — [...]
 
-## Decisions Made
-| Decision | Why | Alternatives Rejected | Why Rejected |
-|----------|-----|-----------------------|--------------|
-| [Choice] | [Reasoning] | [Alt 1] | [Why it was worse] |
-| [Choice] | [Reasoning] | [Alt 2] | [Why it was worse] |
+## Traps (still live)
+- **[Trap]** — [why] → [how to avoid]
 
-## Known Issues
-- [Issue]: [Impact and workaround if any]
+## Dead Ends (don't retry)
+- **[Approach]** — [why it failed]
 
-## Next Steps (Priority Order)
-1. [Most important — do this first]
-2. [Second priority]
-3. [Third priority]
-
-## Rollback Info
-- Last known good state: [commit hash or description]
-- If the current approach doesn't work: [what to undo and how]
-
-## Files Modified This Session
-- `path/to/file` — [what changed and why]
+## Open Questions
+- [...]
 ```
 
-**IMPORTANT: The Decisions table MUST include rejected alternatives and WHY they were rejected.** This prevents the next session from re-exploring dead ends. Documenting what you DIDN'T do is as valuable as documenting what you did.
+Empty section → delete the heading.
 
-## Step 4: Final Checklist
+## Step 3: Final Checklist
 
-- [ ] 30-second summary written
+- [ ] HANDOVER.md contains exactly one handover, ≤ 150 lines
 - [ ] All partial work stashed or committed
-- [ ] HANDOVER.md is complete with all sections filled
-- [ ] Every modified file is listed with what changed
 - [ ] Next steps are clear, prioritized, and actionable
-- [ ] Rollback info is documented
-- [ ] Decisions table includes rejected alternatives with reasons
-- [ ] Git status is clean (committed or documented why not)
+- [ ] Dead ends listed so the next session doesn't retry them
+- [ ] Committed and pushed
 
 ## Success Criteria
 
-- A brand new session with zero context can read HANDOVER.md and continue work without asking a single clarifying question
-- No dead-end approaches will be re-explored thanks to the decisions table
+- A brand new session with zero context can read HANDOVER.md in under a minute and continue work

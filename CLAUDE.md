@@ -40,6 +40,9 @@ kickoff, read-handover, handover, low-context-handover, emergency-handover, thin
 
 - Follow KISS, DRY, YAGNI, SOLID principles
 - Templates should be energetic and directive, not corporate checklists
+- Every template keeps a `## Success Criteria` section (a test requires it)
+- A template that tells the agent to write a doc must also cap it and say replace, not append (PRINCIPLES.md "Agent-Written Docs")
+- When syncing templates into project `.claude/commands/` copies, overwrite only copies identical to a past ccprompt version; customised copies are skipped
 - Global install via `npm install -g @ccprompt/cli`
 - Slash commands installed to `.claude/commands/` → `/<template>` in Claude Code
 - CI: GitHub Actions runs tests on Node 18/20/22

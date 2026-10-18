@@ -453,6 +453,17 @@ describe('UserService', () => {
 ```
 
 
+### Machine Budget
+
+**Rule:** A test run must never take the whole machine. Several agent sessions, editors and servers share it.
+
+- **While working, run only the tests that touch the change** (one file, one folder). The full suite is not a save button; never after a small edit, never in a loop.
+- **The full gate runs once per commit,** right before it, and not again afterwards. If a hook runs it, do not run it by hand first. Certainty does not change: no commit on a red gate, never `--no-verify`.
+- **Cap the workers.** Vitest in run mode defaults to one worker per core; pin `--maxWorkers=4` on the `test` script. Playwright defaults to half the cores, one browser per worker; pin `workers: 1` and reuse a running server.
+- **E2E at most once per unit**, headless, never as a quick look after an edit.
+- **Stop what you start.** Reuse a dev server already on the port; at session end stop every server, harness and headless browser you started, by PID, never by image name.
+- **No watch mode in an agent session** (bare `vitest`, `tsc --watch`, `nodemon`).
+
 ## Documentation Principles
 
 **Rule:** Documentation lives with code and is version controlled.

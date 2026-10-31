@@ -15,3 +15,10 @@ powershell -ExecutionPolicy Bypass -File C:\Users\kreyh\Projekte\ccprompt\autopi
   retries. Three failed cycles in a row with no commit: stops.
 - Logs: `%USERPROFILE%\.autopilot\<repo>\<stamp>.jsonl` (stream json, UTF-8) and `.err`.
 - Options: `-MaxCycles N`, `-MaxTurns N`, `-PauseSec`, `-LimitSleepMin`, `-PermissionMode`.
+
+## All machines
+
+`machines.json` maps each machine name (`$env:COMPUTERNAME`) to its game repo folder under `~/Projekte` (or a list).
+On each machine, one command: `powershell -ExecutionPolicy Bypass -File C:\Users\kreyh\Projekte\ccprompt\autopilot\start.ps1`.
+It refuses a machine with no entry and a repo listed on two machines, skips a repo with uncommitted changes (another
+session), pulls, and opens one autopilot window per repo. Replace the placeholder names with the real machine names.

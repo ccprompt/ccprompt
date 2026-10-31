@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File C:\Users\kreyh\Projekte\ccprompt\autopi
 
 ## All machines
 
-`machines.json` maps each machine name (`$env:COMPUTERNAME`) to its game repo folder under `~/Projekte` (or a list).
-On each machine, one command: `powershell -ExecutionPolicy Bypass -File C:\Users\kreyh\Projekte\ccprompt\autopilot\start.ps1`.
-`-DryRun` checks everything and opens no window. It refuses a machine with no entry and a repo listed on two machines, skips a repo with uncommitted changes (another
-session), pulls, and opens one autopilot window per repo. Replace the placeholder names with the real machine names.
+One command on every machine, no list: `powershell -ExecutionPolicy Bypass -File C:\Users\kreyh\Projekte\ccprompt\autopilot\start.ps1`.
+It reads the machine's git reflog: a game with 20 or more commits made on this machine in two days is developed here,
+so each game runs on exactly the machine that develops it. A repo with uncommitted changes (a session is working in
+it) is skipped: close that session first. `-DryRun` shows what it would start, `-Map <file>` takes an explicit list.

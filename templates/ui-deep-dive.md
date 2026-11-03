@@ -30,14 +30,14 @@ Open the product with Playwright MCP and systematically document EVERY visible f
 
 **SCREENSHOT RULE:** Screenshot at every significant moment — every new page, every state change, every modal, every dropdown, every hover state, every error state, every empty state, every responsive breakpoint. Then ANALYZE each screenshot in EXHAUSTIVE detail. Not "looks clean." Describe every element visible, its position, color, typography, spacing, alignment, and whether it serves the user well. If you catch yourself writing less than 3 sentences per screenshot, you're being lazy. Stop and look harder.
 
-**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. Budget up to 12 screenshots per session, then use `/low-context-handover` to continue. The API has a 20MB request limit — PNG screenshots WILL crash the session. Use viewport 1366x768 or smaller unless testing responsive.
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots (about 80% smaller than PNG), viewports 1366x768 or smaller, element shots where possible. Budget: 60 screenshots per session on Claude Code v2.1.299 or newer (15 on older versions; check `claude --version`). Claude Code's request limit is 32 MB; since v2.1.212 it strips accumulated images and retries instead of the session dying, and `/compact` drops them. The real cost is context (about 1,400 tokens per 1366x768 screenshot): take each one for a reason, and use `/low-context-handover` before the budget runs out.
 
 **MULTI-SESSION STRATEGY:** A thorough UI deep dive requires 3-6 sessions for any non-trivial product. Plan your coverage:
-- **Session 1:** Sitemap + navigation + landing/home pages (Phases 1-2) — 12 screenshots
-- **Session 2:** Core feature pages deep dive (Phase 3) — 12 screenshots
-- **Session 3:** Forms, interactions, and state analysis (Phases 4-5) — 12 screenshots
-- **Session 4:** Responsive testing + edge states (Phase 6) — 12 screenshots
-- **Session 5+:** Remaining pages, settings, admin, secondary features — 12 screenshots each
+- **Session 1:** Sitemap + navigation + landing/home pages (Phases 1-2) — up to 60 screenshots
+- **Session 2:** Core feature pages deep dive (Phase 3) — up to 60 screenshots
+- **Session 3:** Forms, interactions, and state analysis (Phases 4-5) — up to 60 screenshots
+- **Session 4:** Responsive testing + edge states (Phase 6) — up to 60 screenshots
+- **Session 5+:** Remaining pages, settings, admin, secondary features — up to 60 screenshots each
 - End each session with `/low-context-handover` documenting: pages covered, issues found, what's left
 
 ## Don't

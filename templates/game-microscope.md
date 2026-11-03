@@ -44,12 +44,12 @@ You MUST use Playwright MCP. But unlike other skills, you don't just screenshot 
 **ALWAYS use `type: "jpeg"` for screenshots.** JPEG is ~80% smaller than PNG.
 
 **ELEMENT-LEVEL SCREENSHOTS are your superpower.** A full 1366x768 viewport screenshot ≈ 200-300KB JPEG. A 400x300 element crop ≈ 30-60KB JPEG. That means:
-- Full viewport: ~12 screenshots per session before context limit
-- Element crops: ~40-50 screenshots per session
+- Full viewport: ~60 screenshots per session (Claude Code v2.1.299+; 15 on older versions)
+- Element crops: cheaper still in context; the same 60 per session budget counts every capture
 
 **USE ELEMENT SCREENSHOTS FOR BURST CAPTURES.** When analyzing an animation or state transition, crop to just the area of interest. This lets you take 3-shot bursts (before/during/after) at the cost of ~1 full screenshot.
 
-**Budget:** Plan for 8-10 full screenshots + 3-4 burst sequences (3 element crops each) = ~20-22 captures per session. Use `/low-context-handover` when approaching 20 captures.
+**Budget:** Plan for 8-10 full screenshots + 3-4 burst sequences (3 element crops each) = ~20-22 captures, so a session fits two such rounds inside its 60 capture budget (Claude Code v2.1.299+). Use `/low-context-handover` when approaching 60 captures.
 
 **Viewport:** 1366x768 or smaller unless testing responsive behavior.
 

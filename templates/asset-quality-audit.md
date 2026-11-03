@@ -21,7 +21,7 @@ Do NOT evaluate assets from source files, asset folders, or code inspection alon
 
 **SCREENSHOT RULE:** Screenshot every asset, every asset comparison, every issue. Take close-ups (use `element` parameter when possible). Take wide shots showing assets in context. Take side-by-side comparisons of similar assets. Each screenshot gets a detailed visual analysis — NEVER "looks fine." Describe: exact colors, line quality, shading direction, detail level, edge treatment, proportions, and how it fits with surrounding assets.
 
-**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. After 12 screenshots, use `/low-context-handover` to continue in a new session. The API has a 20MB request limit — PNG screenshots WILL crash the session. For audits needing 40+ screenshots, split across multiple sessions.
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots (about 80% smaller than PNG), viewports 1366x768 or smaller, element shots where possible. Budget: 60 screenshots per session on Claude Code v2.1.299 or newer (15 on older versions; check `claude --version`). Claude Code's request limit is 32 MB; since v2.1.212 it strips accumulated images and retries instead of the session dying, and `/compact` drops them. The real cost is context (about 1,400 tokens per 1366x768 screenshot): take each one for a reason, and use `/low-context-handover` before the budget runs out.
 
 **MULTI-SESSION STRATEGY:**
 - **Session 1:** Asset inventory + style consistency + color/palette (Phases 1-3)

@@ -29,13 +29,13 @@ Time to play. Open the game with Playwright MCP, start interacting, and document
 
 **SCREENSHOT RULE:** Take a screenshot at every significant moment — every new screen, every state change, every mechanic execution, every bug, every moment you form an opinion. Be strategic: not every single click needs a screenshot, but every SIGNIFICANT interaction does. Then ANALYZE each screenshot in EXHAUSTIVE detail. Not "looks fine." Not "the UI is clean." Instead: describe every element visible, its position, its color, its size, whether it's aligned, whether it communicates clearly, whether it serves gameplay, what's good, what's bad, what's missing. If you catch yourself writing less than 3 sentences per screenshot, you're being lazy. Stop and look harder.
 
-**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. Budget up to 12 screenshots per session, then use `/low-context-handover` to continue. The API has a 20MB request limit — PNG screenshots WILL crash the session. Use viewport 1366x768 or smaller unless testing responsive.
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots (about 80% smaller than PNG), viewports 1366x768 or smaller, element shots where possible. Budget: 60 screenshots per session on Claude Code v2.1.299 or newer (15 on older versions; check `claude --version`). Claude Code's request limit is 32 MB; since v2.1.212 it strips accumulated images and retries instead of the session dying, and `/compact` drops them. The real cost is context (about 1,400 tokens per 1366x768 screenshot): take each one for a reason, and use `/low-context-handover` before the budget runs out.
 
 **MULTI-SESSION STRATEGY:** A thorough game test requires 3-5 sessions. Plan your coverage:
-- **Session 1:** First contact + feature inventory (Phases 1-2) — 12 screenshots
-- **Session 2:** Core mechanics deep dive (Phase 3) — 12 screenshots
-- **Session 3:** Engagement + UI/UX + logic testing (Phases 4-6) — 12 screenshots
-- **Session 4:** Performance + edge cases + final assessment (Phases 7-9) — 12 screenshots
+- **Session 1:** First contact + feature inventory (Phases 1-2) — up to 60 screenshots
+- **Session 2:** Core mechanics deep dive (Phase 3) — up to 60 screenshots
+- **Session 3:** Engagement + UI/UX + logic testing (Phases 4-6) — up to 60 screenshots
+- **Session 4:** Performance + edge cases + final assessment (Phases 7-9) — up to 60 screenshots
 - End each session with `/low-context-handover` documenting: screenshots taken, bugs found, features tested, what's left
 - Complex games may need 5+ sessions — that's fine, thoroughness > speed
 

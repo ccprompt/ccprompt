@@ -30,7 +30,7 @@ This template is different from `/game-tester` and `/game-design-audit`. Those t
 - `browser_snapshot` before interacting to find clickable elements
 - If the game uses canvas: use coordinate-based clicking, probe for `window.game` / `window.__gameState`
 
-**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. Budget up to 12 screenshots per session, then use `/low-context-handover` to continue. The API has a 20MB request limit — PNG screenshots WILL crash the session. Use viewport 1366x768 or smaller.
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots (about 80% smaller than PNG), viewports 1366x768 or smaller, element shots where possible. Budget: 60 screenshots per session on Claude Code v2.1.299 or newer (15 on older versions; check `claude --version`). Claude Code's request limit is 32 MB; since v2.1.212 it strips accumulated images and retries instead of the session dying, and `/compact` drops them. The real cost is context (about 1,400 tokens per 1366x768 screenshot): take each one for a reason, and use `/low-context-handover` before the budget runs out.
 
 ## CRITICAL: How to Actually Analyze Screenshots (Read This Twice)
 
@@ -113,11 +113,11 @@ For EVERY screenshot, you MUST describe:
 
 **MULTI-SESSION STRATEGY:** A completionist analysis of any non-trivial game requires 3-6+ sessions. Plan your coverage:
 - **Session 1:** Full codebase research + feature inventory (Phase 1-2) — 0 screenshots (pure research)
-- **Session 2:** Core mechanics + main gameplay path (Phase 3, priority features) — 12 screenshots
-- **Session 3:** Secondary features, menus, settings, UI (Phase 3 continued) — 12 screenshots
-- **Session 4:** Edge cases, hidden features, error states (Phase 3 continued) — 12 screenshots
-- **Session 5:** State transitions, combinations, untested gaps (Phase 4) — 12 screenshots
-- **Session 6:** Final coverage audit + mop-up (Phase 5) — 12 screenshots
+- **Session 2:** Core mechanics + main gameplay path (Phase 3, priority features) — up to 60 screenshots
+- **Session 3:** Secondary features, menus, settings, UI (Phase 3 continued) — up to 60 screenshots
+- **Session 4:** Edge cases, hidden features, error states (Phase 3 continued) — up to 60 screenshots
+- **Session 5:** State transitions, combinations, untested gaps (Phase 4) — up to 60 screenshots
+- **Session 6:** Final coverage audit + mop-up (Phase 5) — up to 60 screenshots
 - End EVERY session with `/low-context-handover` documenting: features tested, features remaining, coverage %
 
 ## Don't

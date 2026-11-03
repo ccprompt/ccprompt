@@ -21,12 +21,12 @@ You cannot evaluate game design from source code. You MUST:
 
 **SCREENSHOT ANALYSIS RULE:** Every screenshot gets a detailed analysis connecting what you SEE to what the player FEELS. Not "the button is blue" but "the blue button against the dark background creates clear visual hierarchy, the player's eye goes there first, this communicates the primary action effectively." Connect pixels to player psychology.
 
-**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots — JPEG is ~80% smaller than PNG. Budget up to 12 screenshots per session, then use `/low-context-handover` to continue.
+**CONTEXT LIMIT RULE (CRITICAL):** ALWAYS use `type: "jpeg"` for screenshots (about 80% smaller than PNG), viewports 1366x768 or smaller, element shots where possible. Budget: 60 screenshots per session on Claude Code v2.1.299 or newer (15 on older versions; check `claude --version`). Claude Code's request limit is 32 MB; since v2.1.212 it strips accumulated images and retries instead of the session dying, and `/compact` drops them. The real cost is context (about 1,400 tokens per 1366x768 screenshot): take each one for a reason, and use `/low-context-handover` before the budget runs out.
 
 **MULTI-SESSION STRATEGY:**
-- **Session 1:** Play for 5+ minutes, then 5-Second Test + Feel Stack + Juice Audit (Phases 1-3) — 12 screenshots
-- **Session 2:** Visual-Mechanical Unity + Engagement Architecture (Phases 4-5) — 12 screenshots
-- **Session 3:** Comparative Benchmark + Verdict (Phases 6-7) — 12 screenshots
+- **Session 1:** Play for 5+ minutes, then 5-Second Test + Feel Stack + Juice Audit (Phases 1-3) — up to 60 screenshots
+- **Session 2:** Visual-Mechanical Unity + Engagement Architecture (Phases 4-5) — up to 60 screenshots
+- **Session 3:** Comparative Benchmark + Verdict (Phases 6-7) — up to 60 screenshots
 - End each session with `/low-context-handover`
 
 **IF YOU ALREADY RAN `/game-tester`:** Skip Phases 1-2 (Feel Stack) — you already have that data. Focus on Phases 3-7 which go deeper on design quality, engagement architecture, and comparative analysis. Reference your game-tester findings instead of re-measuring.
